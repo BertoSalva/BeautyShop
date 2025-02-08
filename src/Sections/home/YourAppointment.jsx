@@ -5,7 +5,6 @@ import CButton from '../../components/common/CButton';
 import SalonSubDetail from '../../components/homeTab/SalonSubDetail';
 import SubDetailComponent from '../../components/homeTab/SubDetailComponent';
 import ChoosePayment from '../../components/modals/ChoosePayment';
-import strings from '../../i18n/strings';
 
 const YourAppointment = () => {
   const choosePaymentRef = useRef(null);
@@ -29,11 +28,11 @@ const YourAppointment = () => {
 
         <div className="flex justify-between items-center mt-6 bg-white p-4 rounded-lg shadow">
           <div>
-            <CText type="R14" color="text-gray-600">{strings.total}</CText>
+            <CText type="R14" color="text-gray-600">Total</CText> {/* Replaced `strings.total` */}
             <CText type="B16" className="text-lg font-bold">$70.00</CText>
           </div>
           <CButton
-            title={strings.payNow}
+            title="Pay Now"  // Replaced `strings.payNow`
             type="S16"
             color="white"
             containerStyle="bg-blue-600 px-6 py-2 rounded-lg hover:bg-blue-700"
