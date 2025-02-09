@@ -28,7 +28,7 @@ const WhyChoose = () => {
       
       {/* Section Title */}
       <h1 data-aos="zoom-in" className='text-5xl font-bold text-center text-white drop-shadow-lg'>
-        Why Choose <span className="text-[#ffdbf2]">Nail Tech?</span>
+        Why Choose <span className="text-[#f15bf1]">Nail Tech?</span>
       </h1>
 
       {/* Nail Tech Profiles */}
