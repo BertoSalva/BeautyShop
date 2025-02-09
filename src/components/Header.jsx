@@ -12,12 +12,12 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
 
   const navItems = [
     { link: 'Home', path: 'home', type: 'scroll' },
-    { link: 'Nail-Tech', path: 'about', type: 'scroll' },
+    { link: 'Nails', path: 'about', type: 'scroll' },
     { link: 'Barber', path: 'pricing', type: 'scroll' },
-    { link: 'Services', path: 'services', type: 'scroll' },
-    { link: 'Testimonial', path: 'testimonial', type: 'scroll' },
-    { link: 'Contact', path: 'contact', type: 'scroll' },
-    { link: 'Appointments', path: '/appointment', type: 'router' }
+    { link: 'Make-up', path: 'services', type: 'scroll' },
+    { link: 'Hair', path: 'testimonial', type: 'scroll' },
+    { link: 'Contact', path: 'contact', type: 'scroll' }
+   // { link: 'Appointments', path: '/appointment', type: 'router' }//
   ];
 
   const handleLogout = () => {
