@@ -52,7 +52,7 @@ const Services = () => {
           >
             {/* Profile Image */}
             <img 
-              src={artist.image} 
+              src={artist.image}  
               alt={artist.name} 
               className='w-28 h-28 rounded-full mb-4 border-4 border-gray-300 object-cover shadow-lg'
             />
