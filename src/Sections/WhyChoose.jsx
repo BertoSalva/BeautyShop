@@ -20,7 +20,7 @@ const WhyChoose = () => {
       
       {/* Customer Support Section */}
       <div data-aos="zoom-in" className='flex flex-col justify-center items-center gap-10 bg-white p-10 rounded-xl md:w-[40%] w-full'>
-        <h1 className='text-[#a69f7d] text-4xl font-bold'>CUSTOMER SUPPORT</h1>
+        <h1 className='text-[#f273f2] text-4xl font-bold'>CUSTOMER SUPPORT</h1>
         <p className='text-xl text-black font-medium text-center'>
           Our team is available **24/7** to assist you with any beauty inquiries, order tracking, and skincare advice. 
         </p>
@@ -30,7 +30,7 @@ const WhyChoose = () => {
           <p className='text-xl text-black font-lg'>Sunday: 11AM - 6PM</p>
         </div>
 
-        <button className='px-10 py-4 rounded-xl border-2 border-black text-black font-semibold text-lg hover:bg-black hover:text-white mt-6'>
+        <button className='px-10 py-4 rounded-xl border-2 border-black text-black font-semibold text-lg hover:bg-[#f273f2] hover:text-white mt-6'>
           CONTACT US
         </button>
       </div>
@@ -64,7 +64,7 @@ const WhyChoose = () => {
           </div>
         </div>
 
-        <button className='text-black px-10 py-4 bg-white hover:bg-[#a69f7d] hover:text-black rounded-xl font-semibold text-xl mt-5'>
+        <button className='text-black px-10 py-4 bg-white hover:bg-[#f273f2] hover:text-black rounded-xl font-semibold text-xl mt-5'>
           SHOP NOW
         </button>
       </div>

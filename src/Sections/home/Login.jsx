@@ -30,7 +30,7 @@ const Login = ({ onLogin }) => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-black">
-      <div className="bg-[#a39446] shadow-lg rounded-2xl p-8 max-w-md w-full">
+      <div className="bg-[#f273f2] shadow-lg rounded-2xl p-8 max-w-md w-full">
         <h2 className="text-3xl font-bold text-center mb-6 text-white">
           {isSignup ? "Sign Up" : "Login"}
         </h2>
@@ -82,7 +82,7 @@ const Login = ({ onLogin }) => {
 
           <button
             type="submit"
-            className="bg-[#aa9e5f] px-6 py-3 rounded-full text-black hover:bg-white hover:text-black font-bold transform hover:scale-110 transition-transform duration-300 cursor-pointer"
+            className="bg-[#fbd0fb] px-6 py-3 rounded-full text-black hover:bg-white hover:text-black font-bold transform hover:scale-110 transition-transform duration-300 cursor-pointer"
           >
             {isSignup ? "Sign Up" : "Login"}
           </button>

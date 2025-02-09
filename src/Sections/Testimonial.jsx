@@ -36,7 +36,7 @@ const Testimonial = () => {
   }, [])
 
   return (
-    <section id='testimonial' className='w-full md:px-20 md:h-[165vh] h-fit px-10 py-20 flex flex-col justify-end items-center gap-6 bg-[#a69f7d]'>
+    <section id='testimonial' className='w-full md:px-20 md:h-[165vh] h-fit px-10 py-20 flex flex-col justify-end items-center gap-6 bg-[#f9b9f9]'>
       <h1 data-aos="zoom-in" className='text-6xl text-white font-bold text-center'>What Our Customers Say</h1>
       <p data-aos="zoom-in" className='text-xl text-white font-semibold text-center'>
         Real feedback from satisfied customers who love our beauty products and services.

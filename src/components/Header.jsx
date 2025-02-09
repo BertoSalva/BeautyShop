@@ -28,25 +28,25 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   const loginButton = isLoggedIn ? (
     <button
       onClick={handleLogout}
-      className="bg-[#aa9e5f] px-6 py-3 rounded-full hover:bg-white hover:text-black font-bold transform hover:scale-110 transition-transform duration-300 cursor-pointer"
+      className="bg-[#f273f2] px-6 py-3 rounded-full hover:bg-white hover:text-black font-bold transform hover:scale-110 transition-transform duration-300 cursor-pointer"
     >
       Logout
     </button>
   ) : (
     <RouterLink
       to="/login"
-      className="bg-[#aa9e5f] px-6 py-3 rounded-full hover:bg-white hover:text-black font-bold transform hover:scale-110 transition-transform duration-300 cursor-pointer"
+      className="bg-[#f273f2] px-6 py-3 rounded-full hover:bg-white hover:text-black font-bold transform hover:scale-110 transition-transform duration-300 cursor-pointer"
     >
       Login/Sign-Up
     </RouterLink>
   );
 
   return (
-    <nav className="flex justify-between items-center gap-4 bg-black lg:px-10 px-4 py-6 sticky top-0 z-30 border-[8px] border-[#a39446]">
+    <nav className="flex justify-between items-center gap-4 bg-black lg:px-10 px-4 py-6 sticky top-0 z-30 border-[8px] border-[#f273f2]">
       {/* Logo */}
       <div id="logo">
         <h1 className="text-white font-bold text-5xl">
-          myBeauty<span className="italic text-[#aa9e5f]">Shop</span>
+          myBeauty<span className="italic text-[#f273f2]">Shop</span>
         </h1>
       </div>
 
@@ -57,7 +57,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
             type === 'scroll' ? (
               <ScrollLink
                 key={path}
-                className="text-white uppercase font-semibold cursor-pointer p-3 rounded-lg hover:bg-[#aa9e5f] hover:text-black"
+                className="text-white uppercase font-semibold cursor-pointer p-3 rounded-lg hover:bg-[#f273f2] hover:text-black"
                 to={path}
                 spy={true}
                 offset={-100}
@@ -69,7 +69,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
               <RouterLink
                 key={path}
                 to={path}
-                className="text-white uppercase font-semibold cursor-pointer p-3 rounded-lg hover:bg-[#aa9e5f] hover:text-black"
+                className="text-white uppercase font-semibold cursor-pointer p-3 rounded-lg hover:bg-[#f273f2] hover:text-black"
               >
                 {link}
               </RouterLink>

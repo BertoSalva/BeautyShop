@@ -24,7 +24,7 @@ const Contact = () => {
           <input type="text" placeholder='Enter your full name' className='w-full p-3 text-black font-semibold' />
           <input type="email" placeholder='Enter your valid email' className='w-full p-3 text-black font-semibold' />
           <textarea name="" id="" cols="30" rows="5" placeholder='Enter your message here...' className='w-full p-3'></textarea>
-          <input type="submit" value="SUBMIT" className='bg-[#a69f7d] hover:bg-[#92843b] cursor-pointer w-full font-semibold text-lg text-black p-3' />
+          <input type="submit" value="SUBMIT" className='bg-[#f9b9f9] hover:bg-[#f15bf1] cursor-pointer w-full font-semibold text-lg text-black p-3' />
         </div>
       </div>
     </section>

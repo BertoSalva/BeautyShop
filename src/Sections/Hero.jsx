@@ -55,7 +55,7 @@ const Hero = () => {
           </div>
 
           {/* Call To Action */}
-          <button data-aos="zoom-in" className='px-10 py-4 rounded-xl border-2 border-black text-black font-semibold text-lg hover:bg-black hover:text-white'>
+          <button data-aos="zoom-in" className='px-10 py-4 rounded-xl border-2 border-[#f273f2] text-black font-semibold text-lg hover:bg-[#f273f2] hover:text-white'>
             SHOP NOW
           </button>
         </div>
@@ -71,22 +71,22 @@ const Hero = () => {
         <div data-aos="zoom-in" data-aos-delay="200" className='flex flex-col justify-center items-center gap-4'>
           <img src={sissor} alt="Skincare" className='size-16 transform hover:scale-110 transition-transform duration-300 cursor-pointer' />
           <h1 className='text-2xl text-black font-semibold'>Luxury Skincare</h1>
-          <button className='px-10 py-3 bg-black text-white text-md font-semibold rounded-xl hover:bg-[#a69f7d] hover:text-black cursor-pointer'>SHOP NOW</button>
+          <button className='px-10 py-3 bg-black text-white text-md font-semibold rounded-xl hover:bg-[#f273f2] hover:text-black cursor-pointer'>SHOP NOW</button>
         </div>
         <div data-aos="zoom-in" data-aos-delay="400" className='flex flex-col justify-center items-center gap-4'>
           <img src={menshair} alt="Makeup" className='size-16 transform hover:scale-110 transition-transform duration-300 cursor-pointer' />
           <h1 className='text-2xl text-black font-semibold'>Makeup Essentials</h1>
-          <button className='px-10 py-3 bg-black text-white text-md font-semibold rounded-xl hover:bg-[#a69f7d] hover:text-black cursor-pointer'>SHOP NOW</button>
+          <button className='px-10 py-3 bg-black text-white text-md font-semibold rounded-xl hover:bg-[#f273f2] hover:text-black cursor-pointer'>SHOP NOW</button>
         </div>
         <div data-aos="zoom-in" data-aos-delay="600" className='flex flex-col justify-center items-center gap-4'>
           <img src={trimmer} alt="Haircare" className='size-16 transform hover:scale-110 transition-transform duration-300 cursor-pointer' />
           <h1 className='text-2xl text-black font-semibold'>Professional Haircare</h1>
-          <button className='px-10 py-3 bg-black text-white text-md font-semibold rounded-xl hover:bg-[#a69f7d] hover:text-black cursor-pointer'>SHOP NOW</button>
+          <button className='px-10 py-3 bg-black text-white text-md font-semibold rounded-xl hover:bg-[#f273f2] hover:text-black cursor-pointer'>SHOP NOW</button>
         </div>
         <div data-aos="zoom-in" data-aos-delay="800" className='flex flex-col justify-center items-center gap-4'>
           <img src={womenhair} alt="Fragrance" className='size-16 transform hover:scale-110 transition-transform duration-300 cursor-pointer' />
           <h1 className='text-2xl text-black font-semibold'>Luxury Fragrances</h1>
-          <button className='px-10 py-3 bg-black text-white text-md font-semibold rounded-xl hover:bg-[#a69f7d] hover:text-black cursor-pointer'>SHOP NOW</button>
+          <button className='px-10 py-3 bg-black text-white text-md font-semibold rounded-xl hover:bg-[#f273f2] hover:text-black cursor-pointer'>SHOP NOW</button>
         </div>
       </section>
     </>
