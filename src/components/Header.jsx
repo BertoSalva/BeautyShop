@@ -12,7 +12,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
 
   const navItems = [
     { link: 'Home', path: 'home', type: 'scroll' },
-    { link: 'About', path: 'about', type: 'scroll' },
+    { link: 'Nail-Tech', path: 'about', type: 'scroll' },
     { link: 'Pricing', path: 'pricing', type: 'scroll' },
     { link: 'Services', path: 'services', type: 'scroll' },
     { link: 'Testimonial', path: 'testimonial', type: 'scroll' },
