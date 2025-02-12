@@ -1,31 +1,87 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {jwtDecode} from "jwt-decode"; // Install with `npm install jwt-decode`
 
 const Login = ({ onLogin }) => {
-  const [isSignup, setIsSignup] = useState(false); // Toggle between Login & Signup
+  const [isSignup, setIsSignup] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState(""); // For Signup
+  const [confirmPassword, setConfirmPassword] = useState(""); 
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Handle form submission
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+  // ✅ Handle Login
+  const handleLogin = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed");
+      }
+  
+      // ✅ Store the token in local storage
+      localStorage.setItem("token", data.token);
+  
+      // ✅ Console log the token
+      console.log("JWT Token:", data.token);
+  
+      // ✅ Decode the token and console log the payload
+      const decodedToken = jwtDecode(data.token);
+      console.log("Decoded Token:", decodedToken);
+  
+      // ✅ Redirect based on role
+      if (decodedToken.role == "client") {
+        navigate("/stylist"); // Redirect to vendor page
+      } else {
+        navigate("/stylist"); // Redirect to home page
+      }
+  
+      onLogin();
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+  
+
+  // ✅ Handle Signup
+  const handleSignup = async () => {
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Signup failed");
+      }
+
+      alert("Signup successful. You can now log in.");
+      setIsSignup(false);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  // ✅ Handle Form Submission
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (isSignup) {
-      if (password !== confirmPassword) {
-        setError("Passwords do not match.");
-        return;
-      }
-      // ✅ Perform Signup Logic (e.g., API call)
-      console.log("Signup Successful:", { email, password });
-    } else {
-      // ✅ Perform Login Logic (e.g., API call)
-      console.log("Login Successful:", { email, password });
-      onLogin();
-      navigate("/");
-    }
+    isSignup ? handleSignup() : handleLogin();
   };
 
   return (
@@ -70,14 +126,6 @@ const Login = ({ onLogin }) => {
                 required
               />
             </>
-          )}
-
-          {!isSignup && (
-            <div className="flex justify-end text-sm mb-4">
-              <a href="#" className="text-white hover:underline">
-                Forgot password?
-              </a>
-            </div>
           )}
 
           <button

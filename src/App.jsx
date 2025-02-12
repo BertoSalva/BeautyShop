@@ -17,6 +17,7 @@ import Contact from './Sections/Contact';
 // Import pages
 import YourAppointment from './Sections/home/YourAppointment';
 import Login from './Sections/home/Login';
+import VendorHome from './Sections/vendorhome/VendorHome';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -47,6 +48,7 @@ const App = () => {
       <Routes>
         <Route path="/appointment" element={<YourAppointment />} />
         <Route path="/login" element={<Login onLogin={() => setIsLoggedIn(true)} />} />
+          <Route path="/stylist" element={<VendorHome/>} />
       </Routes>
 
       {/* ✅ Footer is always visible */}
