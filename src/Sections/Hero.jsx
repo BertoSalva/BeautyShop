@@ -1,96 +1,67 @@
-import React, { useEffect } from 'react'
-import heroimg from '../assets/images/hero.jpg'
-import { FaLocationDot } from "react-icons/fa6";
-import { MdOutlinePhoneAndroid } from "react-icons/md";
-import { FaHeadphones } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
-import sissor from '../assets/images/sissor.png'
-import menshair from '../assets/images/menshair.png'
-import trimmer from '../assets/images/trimmer.png'
-import womenhair from '../assets/images/womenhair.png'
+import React, { useEffect } from 'react';
+import heroLeft from '../assets/images/building.jpg'; // Cityscape image
+import heroRight from '../assets/images/Mama.jpg'; // Grayscale portrait image
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const Hero = () => {
-
   useEffect(() => {
     AOS.init({
-        offset: 200,
-        duration: 800,
-        easing: 'ease-in-sine',
-        delay: 100,
+      offset: 200,
+      duration: 800,
+      easing: 'ease-in-sine',
+      delay: 100,
     });
-}, [])
+  }, []);
 
   return (
-    <>
-      {/* Hero Section */}
-      <section id='hero' className='w-full md:px-[120px] px-10 py-10 flex flex-col md:flex-row justify-center items-center gap-20'>
-        <div id='content-box' className='flex flex-col justify-center items-start gap-10'>
-          <h1 data-aos="zoom-in" className='text-2xl text-black font-semibold'>WELCOME TO</h1>
-          <h1 data-aos="zoom-in" className='text-6xl text-black font-bold'>South Africa's Leading<br /> Online Beauty Store</h1>
-          <p data-aos="zoom-in" className='text-lg text-gray-700 font-medium'>
-            Discover premium beauty products and self-care essentials—all available for delivery across South Africa.  
-            Shop skincare, haircare, and luxury fragrances at unbeatable prices!
-          </p>
-          
-          {/* Contact Information */}
-          <div data-aos="slide-up" id='icon-list' className='flex flex-col justify-center items-start gap-6'>
-            <div id='icon-box' className='flex justify-center items-center gap-3'>
-              <FaLocationDot className='text-black size-6' />
-              <h1 className='text-xl text-gray-800 font-semibold'>Nationwide Delivery Across South Africa</h1>
-            </div>
-            <div id='icon-box' className='flex justify-center items-center gap-3'>
-              <MdOutlinePhoneAndroid className='text-black size-6' />
-              <h1 className='text-xl text-gray-800 font-semibold'>+27 123 456 789 / +27 987 654 321</h1>
-            </div>
-            <div id='icon-box' className='flex justify-center items-center gap-3'>
-              <MdEmail className='text-black size-6' />
-              <h1 className='text-xl text-gray-800 font-semibold'>support@beautyshop.co.za</h1>
-            </div>
-            <div id='icon-box' className='flex justify-center items-center gap-3'>
-              <FaHeadphones className='text-black size-6' />
-              <h1 className='text-xl text-gray-800 font-semibold'>Live Chat Support Available 24/7</h1>
-            </div>
-          </div>
+    <section
+      id='hero'
+      className='w-full h-screen flex relative overflow-hidden'
+    >
+      {/* Left Side - Content with Background Overlay */}
+      <div className='absolute top-0 left-0 w-[70%] h-full bg-cover bg-center flex flex-col justify-center items-start px-10 md:px-20 max-w-3xl' style={{ backgroundImage: `url(${heroLeft})` }}>
+      <h1 data-aos='zoom-in' className='text-5xl md:text-6xl font-bold text-white'>
+            Welcome to <span className='text-pink-500'>myBeautyShop</span>
+          </h1>
+          <br></br>
+          <h2 data-aos='fade-up' className='text-xl md:text-2xl font-medium text-white' style={{ fontSize: '1.25rem', fontWeight: '500', color: 'white', textShadow: '1px 4px 4px purple' }}>
+          Where Beauty Meets Convenience, South African Style.
+        </h2>
 
-          {/* Call To Action */}
-          <button data-aos="zoom-in" className='px-10 py-4 rounded-xl border-2 border-[#f273f2] text-black font-semibold text-lg hover:bg-[#f273f2] hover:text-white'>
-            SHOP NOW
+          <br>
+          </br>
+          <br>
+          </br>
+        <div className='bg-black bg-opacity-50 p-6 rounded-lg'>
+         
+        <p  className='text-lg md:text-xl text-yellow-300'>
+            Step into a world where glamour meets authenticity and let your beauty shine with the vibrant spirit of Mzansi! Whether you're prepping for a special occasion, a bold everyday look, or just treating yourself to some self-love, we've got you covered—from head to toe!
+          </p>
+        </div>
+      </div>
+      
+      {/* Right Side - Search Bar Higher Up */}
+      <div
+        className='absolute top-0 right-0 w-[45%] h-full bg-cover bg-center grayscale flex justify-center items-start pt-20'
+        style={{ backgroundImage: `url(${heroRight})` }}
+      >
+        <div
+          data-aos='fade-up'
+          className='flex items-center bg-white border border-gray-300 rounded-lg overflow-hidden shadow-lg w-full max-w-lg'
+        >
+          <input
+            type='text'
+            placeholder='City, suburb, province'
+            className='w-full p-4 text-gray-700 focus:outline-none border-none'
+          />
+          <button className='bg-black text-white px-6 py-4 font-semibold hover:bg-pink-500 transition rounded-r-lg'>
+            Search
           </button>
         </div>
-
-        {/* Hero Image */}
-        <div data-aos="zoom-in" id='image-box' className='md:w-[50%] w-full'>
-          <img src={heroimg} alt="Beauty Store" className='rounded-xl w-full md:h-[700px] h-[500px]' />
-        </div>
-      </section>
-
-      {/* Featured Beauty Categories */}
-      <section className='grid grid-cols-1 md:grid-cols-4 justify-center items-start w-full md:px-[120px] px-10 py-10 gap-10'>
-        <div data-aos="zoom-in" data-aos-delay="200" className='flex flex-col justify-center items-center gap-4'>
-          <img src={sissor} alt="Skincare" className='size-16 transform hover:scale-110 transition-transform duration-300 cursor-pointer' />
-          <h1 className='text-2xl text-black font-semibold'>Luxury Skincare</h1>
-          <button className='px-10 py-3 bg-black text-white text-md font-semibold rounded-xl hover:bg-[#f273f2] hover:text-black cursor-pointer'>SHOP NOW</button>
-        </div>
-        <div data-aos="zoom-in" data-aos-delay="400" className='flex flex-col justify-center items-center gap-4'>
-          <img src={menshair} alt="Makeup" className='size-16 transform hover:scale-110 transition-transform duration-300 cursor-pointer' />
-          <h1 className='text-2xl text-black font-semibold'>Makeup Essentials</h1>
-          <button className='px-10 py-3 bg-black text-white text-md font-semibold rounded-xl hover:bg-[#f273f2] hover:text-black cursor-pointer'>SHOP NOW</button>
-        </div>
-        <div data-aos="zoom-in" data-aos-delay="600" className='flex flex-col justify-center items-center gap-4'>
-          <img src={trimmer} alt="Haircare" className='size-16 transform hover:scale-110 transition-transform duration-300 cursor-pointer' />
-          <h1 className='text-2xl text-black font-semibold'>Professional Haircare</h1>
-          <button className='px-10 py-3 bg-black text-white text-md font-semibold rounded-xl hover:bg-[#f273f2] hover:text-black cursor-pointer'>SHOP NOW</button>
-        </div>
-        <div data-aos="zoom-in" data-aos-delay="800" className='flex flex-col justify-center items-center gap-4'>
-          <img src={womenhair} alt="Fragrance" className='size-16 transform hover:scale-110 transition-transform duration-300 cursor-pointer' />
-          <h1 className='text-2xl text-black font-semibold'>Luxury Fragrances</h1>
-          <button className='px-10 py-3 bg-black text-white text-md font-semibold rounded-xl hover:bg-[#f273f2] hover:text-black cursor-pointer'>SHOP NOW</button>
-        </div>
-      </section>
-    </>
-  )
-}
+      </div>
+    </section>
+  );
+};
 
 export default Hero;
