@@ -2,11 +2,14 @@ import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
+// Using the same image repeatedly as per your request
+import heroLeft from '../assets/images/building.jpg';
+import heroBottomLeft from '../assets/images/building.jpg';
+import heroRight from '../assets/images/building.jpg';
+
 const makeupArtists = [
-  { name: 'Sophia Carter', rating: 4.9, jobsDone: 150, isOnline: true, image: '/assets/makeup1.jpg' },
-  { name: 'Isabella Lee', rating: 4.8, jobsDone: 120, isOnline: true, image: '/assets/makeup2.jpg' },
-  { name: 'Emma Robinson', rating: 5.0, jobsDone: 200, isOnline: true, image: '/assets/makeup3.jpg' },
-  { name: 'Olivia Brown', rating: 4.7, jobsDone: 95, isOnline: false, image: '/assets/makeup4.jpg' },
+  { name: 'Emma Robinson', rating: 5.0, jobsDone: 200, isOnline: true },
+  { name: 'Emma Robinson', rating: 5.0, jobsDone: 200, isOnline: true },
 ];
 
 const Services = () => {
@@ -20,91 +23,76 @@ const Services = () => {
   }, []);
 
   return (
-    <section 
-      id='services' 
-      className='w-full flex flex-col md:px-20 px-10 md:py-20 py-10 relative overflow-hidden'
-      style={{ background: '#fbd0fb' }}
-    >
-      
-      {/* Floating Sparkle Decorations */}
-      <div className="absolute top-10 left-10 w-16 h-16 bg-white opacity-30 rounded-full blur-3xl animate-float1"></div>
-      <div className="absolute bottom-20 right-20 w-20 h-20 bg-[#f273f2] opacity-40 rounded-full blur-3xl animate-float2"></div>
+    <section className="w-full h-screen flex flex-col relative">
+      {/* Top Section with Two Images */}
+      <div className="w-full flex">
+        {/* Left Image */}
+        <div 
+          className="relative w-1/2 h-[60vh] bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroLeft})` }}
+        ></div>
 
-      {/* Section Title */}
-      <div className='flex flex-col justify-center items-center gap-4'>
-        <h1 data-aos="fade-down" className='text-5xl text-black font-extrabold text-center tracking-wide'>
-        ✨ Discover <span className="text-[#f273f2]">Top Makeup Artists</span>✨ 
+        {/* Right Image */}
+        <div 
+          className="relative w-1/2 h-[100vh] bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroRight})` }}
+        ></div>
+      </div>
+
+      {/* Bottom Left Image */}
+      <div 
+        className="absolute left-0 bottom-[1%] w-1/2 h-[40vh] bg-cover bg-center"
+        style={{ backgroundImage: `url(${heroBottomLeft})` }}
+      ></div>
+
+      {/* Right Pink Section (Text & Profiles) */}
+      <div className="absolute right-0 top-0 h-full w-[30%] bg-[#ff00ff] flex flex-col items-center px-6 py-10 text-white text-center">
+        <h1 className="text-3xl font-extrabold leading-tight">
+          Find Your <br /> Perfect Make-Up <span className="text-black">Artist</span>
         </h1>
-        
-        <p data-aos="fade-up" className='text-lg text-gray-800 text-center max-w-3xl italic'>
-          Whether you're attending a **high-profile event**, a **romantic dinner**, or a **wedding**,  
-          our **elite makeup artists** are here to craft a look that **speaks confidence & elegance.**
+        <p className="text-md mt-2">
+          Flawless for Every Shade: Mzansi’s Top Artists at Your Service.
         </p>
-      </div>
 
-      {/* Makeup Artist Profiles */}
-      <div className='grid md:grid-cols-2 grid-cols-1 gap-12 w-full max-w-6xl mt-12'>
-        {makeupArtists.map((artist, index) => (
-          <div 
-            key={index} 
-            data-aos={index % 2 === 0 ? "fade-left" : "fade-right"}
-            className={`bg-white shadow-2xl rounded-2xl p-8 flex flex-col items-center text-center transform transition duration-300 hover:scale-105 ${index % 2 === 0 ? "md:ml-auto" : "md:mr-auto"}`}
-          >
-            {/* Profile Image */}
-            <img 
-              src={artist.image}  
-              alt={artist.name} 
-              className='w-28 h-28 rounded-full mb-4 border-4 border-gray-300 object-cover shadow-lg'
-            />
+        {/* Two Profile Cards in a Column */}
+        <div className="mt-6 flex flex-col gap-6">
+          {makeupArtists.map((artist, index) => (
+            <div key={index} className="bg-white text-black shadow-md rounded-lg p-4 w-[230px] text-center">
+              {/* Profile Image Placeholder */}
+              <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center shadow-md">
+                <span className="text-gray-600 text-xs font-semibold">{artist.name}</span>
+              </div>
 
-            {/* Online Status & Name */}
-            <div className="w-full flex items-center justify-between">
-              <h2 className='text-2xl font-bold text-black'>{artist.name}</h2>
-              <span className={`w-4 h-4 rounded-full ${artist.isOnline ? 'bg-green-500' : 'bg-red-500'}`} />
+              <h2 className="text-lg font-bold mt-2">{artist.name}</h2>
+              <p className="text-xs text-gray-600 mt-1">⭐ {artist.rating}/5</p>
+              <p className="text-xs text-gray-500">Clients: <span className="font-semibold">{artist.jobsDone}</span></p>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col gap-1 mt-2">
+                <button className="bg-[#ff00ff] text-white px-3 py-1 rounded-full text-xs font-semibold hover:bg-[#d900d9] transition">
+                  Book Now
+                </button>
+                <button className="bg-white text-[#ff00ff] border-2 border-[#ff00ff] px-3 py-1 rounded-full text-xs font-semibold hover:bg-[#ff00ff] hover:text-white transition">
+                  View Portfolio
+                </button>
+              </div>
+
+              {/* Service Selection Dropdown */}
+              <select className="mt-2 px-2 py-1 border rounded-full text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#ff00ff] shadow-sm w-full">
+                <option>Select a Glam Look</option>
+                <option>Runway Glam</option>
+                <option>Soft Romantic Look</option>
+                <option>HD & Airbrush Magic</option>
+              </select>
             </div>
+          ))}
+        </div>
 
-            {/* Rating */}
-            <p className='text-lg text-gray-600 mt-2'>⭐ {artist.rating}/5</p>
-
-            {/* Jobs Done */}
-            <p className='text-md text-gray-500 mb-4'>Clients Transformed: <span className="font-semibold text-black">{artist.jobsDone}</span></p>
-
-            {/* Action Buttons */}
-            <div className="flex gap-4 mt-4 w-full">
-              <button className='bg-[#f273f2] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#d95cd6] transition w-full shadow-md animate-bounce'>
-                Book Now
-              </button>
-              <button className='bg-white text-[#f273f2] border-2 border-[#f273f2] px-6 py-3 rounded-full font-semibold hover:bg-[#f273f2] hover:text-white transition w-full shadow-md'>
-                View Portfolio
-              </button>
-            </div>
-
-            {/* Service Selection Dropdown */}
-            <select className='mt-6 px-4 py-3 border rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#f273f2] shadow-sm w-full'>
-              <option>Select a Glam Look</option>
-              <option>Bridal Glow</option>
-              <option>Runway Glam</option>
-              <option>Soft Romantic Look</option>
-              <option>HD & Airbrush Magic</option>
-            </select>
-          </div>
-        ))}
-      </div>
-
-      {/* Call to Action */}
-      <div className='mt-16 text-center' data-aos="zoom-in">
-        <h2 className='text-3xl font-bold text-black'>
-          **Flawless Beauty Starts Here** 💖
-        </h2>
-        <p className='text-lg text-gray-800 max-w-2xl mx-auto mt-3'>
-          **Let our top-tier artists craft a masterpiece on your face.**  
-          **Book a session now & get pampered like royalty!**
-        </p>
-        <button className='bg-[#f273f2] text-white px-10 py-4 rounded-full font-semibold hover:bg-[#d95cd6] transition mt-6 shadow-lg animate-pulse'>
-          Find Your Makeup Artist
+        {/* View More Button */}
+        <button className="mt-4 bg-black text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-800 transition">
+          View More
         </button>
       </div>
-
     </section>
   );
 };
