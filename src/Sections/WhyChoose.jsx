@@ -68,37 +68,7 @@ const WhyChoose = () => {
             </select>
           </div>
         ))}
-        {/* Nail Tech Profile Card */}
-        {nailTechs.map((tech, index) => (
-          <div key={index} className="bg-white text-black shadow-xl rounded-2xl p-6 w-[280px] text-center mt-6">
-            {/* Profile Image Placeholder */}
-            <div className="w-20 h-20 bg-gray-300 rounded-full flex items-center justify-center shadow-md">
-              <span className="text-gray-600 font-semibold">{tech.name}</span>
-            </div>
-
-            <h2 className="text-xl font-bold mt-3">{tech.name}</h2>
-            <p className="text-md text-gray-600 mt-1">⭐ {tech.rating}/5</p>
-            <p className="text-sm text-gray-500">Clients Transformed: <span className="font-semibold">{tech.jobsDone}</span></p>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col gap-2 mt-4">
-              <button className="bg-[#ff00ff] text-white px-5 py-2 rounded-full font-semibold hover:bg-[#d900d9] transition">
-                Book Now
-              </button>
-              <button className="bg-white text-[#ff00ff] border-2 border-[#ff00ff] px-5 py-2 rounded-full font-semibold hover:bg-[#ff00ff] hover:text-white transition">
-                View Portfolio
-              </button>
-            </div>
-
-            {/* Service Selection Dropdown */}
-            <select className="mt-3 px-3 py-2 border rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#ff00ff] shadow-sm w-full">
-              <option>Select a Glam Look</option>
-              <option>French Tips</option>
-              <option>Acrylic Nail Art</option>
-              <option>Gel Manicure</option>
-            </select>
-          </div>
-        ))}
+        
 
         {/* View More Button */}
         <button className="bg-black text-white px-5 py-2 rounded-full font-semibold hover:bg-gray-800 transition mt-4">

@@ -2,17 +2,20 @@ import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
+// Use the same barber images as per your request
+import heroLeft from '../assets/images/building.jpg';
+import heroCenter from '../assets/images/building.jpg';
+import heroRight from '../assets/images/building.jpg';
+
 const barbers = [
-  { name: 'Michael Johnson', rating: 4.9, jobsDone: 150, isOnline: true, image: '/assets/barber1.jpg' },
-  { name: 'David Smith', rating: 4.7, jobsDone: 120, isOnline: true, image: '/assets/barber2.jpg' },
-  { name: 'James Anderson', rating: 5.0, jobsDone: 200, isOnline: true, image: '/assets/barber3.jpg' },
-  { name: 'Daniel Thompson', rating: 4.6, jobsDone: 95, isOnline: false, image: '/assets/barber4.jpg' },
+  { name: 'Emma Robinson', rating: 5.0, jobsDone: 200, isOnline: true },
+  { name: 'Emma Robinson', rating: 5.0, jobsDone: 200, isOnline: true },
 ];
 
-const Pricing = () => {
+const Barbers = () => {
   useEffect(() => {
     AOS.init({
-      offset: 200,
+      offset: 150,
       duration: 800,
       easing: 'ease-in-sine',
       delay: 100,
@@ -20,83 +23,75 @@ const Pricing = () => {
   }, []);
 
   return (
-    <section 
-      id='pricing' 
-      className='w-full md:px-20 px-10 md:py-20 py-10 flex flex-col items-center gap-10 bg-white'
-    >
-      
-      {/* Section Title */}
-      <h1 data-aos="zoom-in" className='text-5xl font-bold text-center text-black'>
-        Why Choose <span className="text-[#f273f2]">Our Barbers?</span>
-      </h1>
+    <section className="w-full h-screen flex flex-col relative">
+      {/* Top Barber Images */}
+      <div className="w-full flex">
+        {/* Left Image */}
+        <div 
+          className="relative w-1/3 h-[65vh] bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroLeft})` }}
+        ></div>
 
-      {/* Subheading & Description */}
-      <p data-aos="fade-up" className='text-lg text-gray-700 text-center max-w-3xl'>
-        Experience precision grooming with our expert barbers. Whether you're looking for a **fresh fade, beard trim, or a classic haircut**, 
-        our professionals ensure **top-quality service** tailored to your style.
-      </p>
+        {/* Center Image */}
+        <div 
+          className="relative w-1/3 h-[65vh] bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroCenter})` }}
+        ></div>
 
-      {/* Barber Profiles */}
-      <div className='grid md:grid-cols-3 grid-cols-1 gap-10 w-full max-w-6xl'>
-        {barbers.map((barber, index) => (
-          <div 
-            key={index} 
-            className='bg-white shadow-xl rounded-2xl p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105'
-          >
-            {/* Profile Image */}
-            <img 
-              src={barber.image} 
-              alt={barber.name} 
-              className='w-24 h-24 rounded-full mb-3 border-4 border-gray-200 object-cover'
-            />
-
-            {/* Online Status & Name */}
-            <div className="w-full flex items-center justify-between">
-              <h2 className='text-2xl font-bold text-black'>{barber.name}</h2>
-              <span className={`w-4 h-4 rounded-full ${barber.isOnline ? 'bg-green-500' : 'bg-red-500'}`} />
-            </div>
-
-            {/* Rating */}
-            <p className='text-lg text-gray-600 mt-2'>⭐ {barber.rating}/5</p>
-
-            {/* Jobs Done */}
-            <p className='text-md text-gray-500 mb-4'>Jobs Completed: <span className="font-semibold text-black">{barber.jobsDone}</span></p>
-
-            {/* Action Buttons */}
-            <div className="flex gap-4 mt-4 w-full">
-              <button className='bg-[#f273f2] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#d95cd6] transition w-full shadow-md'>
-                Book Now
-              </button>
-              <button className='bg-white text-[#f273f2] border-2 border-[#f273f2] px-6 py-3 rounded-full font-semibold hover:bg-[#f273f2] hover:text-white transition w-full shadow-md'>
-                View Portfolio
-              </button>
-            </div>
-
-            {/* Service Selection Dropdown */}
-            <select className='mt-6 px-4 py-3 border rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#f273f2] shadow-sm w-full'>
-              <option>Select a Service</option>
-              <option>Classic Haircut</option>
-              <option>Beard Trim</option>
-              <option>Hot Towel Shave</option>
-              <option>Full Grooming Package</option>
-            </select>
-          </div>
-        ))}
+        {/* Right Image */}
+        <div 
+          className="relative w-1/3 h-[65vh] bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroRight})` }}
+        ></div>
       </div>
 
-      {/* Call to Action */}
-      <div className='mt-10 text-center'>
-        <h2 className='text-3xl font-semibold text-black'>Book Your Appointment Today</h2>
-        <p className='text-lg text-gray-700 max-w-2xl mx-auto'>
-          Get a **sharp, clean cut** from our expert barbers. Easy online booking, skilled professionals, and a perfect look **every time**.
-        </p>
-        <button className='bg-[#f273f2] text-white px-8 py-3 rounded-full font-semibold hover:bg-[#d95cd6] transition mt-4 shadow-md'>
-          Find a Barber
+      {/* Center Pink Section (Bottom) */}
+      <div className="absolute bottom-0 left-0 right-0 w-full h-[35vh] bg-[#ff00ff] flex flex-col items-center">
+        <h1 className="text-6xl font-extrabold text-black text-center mt-4">
+          Find Your <br /> Perfect Barber
+        </h1>
+
+        {/* Profile Cards Positioned Bottom-Right */}
+        <div className="absolute bottom-4 right-24 flex gap-6">
+          {barbers.map((barber, index) => (
+            <div key={index} className="bg-white text-black shadow-md rounded-lg p-4 w-[190px] text-center">
+              {/* Profile Image Placeholder */}
+              <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center shadow-md">
+                <span className="text-gray-600 text-xs font-semibold">{barber.name}</span>
+              </div>
+
+              <h2 className="text-lg font-bold mt-2">{barber.name}</h2>
+              <p className="text-xs text-gray-600 mt-1">⭐ {barber.rating}/5</p>
+              <p className="text-xs text-gray-500">Clients: <span className="font-semibold">{barber.jobsDone}</span></p>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col gap-1 mt-2">
+                <button className="bg-[#ff00ff] text-white px-3 py-1 rounded-full text-xs font-semibold hover:bg-[#d900d9] transition">
+                  Book Now
+                </button>
+                <button className="bg-white text-[#ff00ff] border-2 border-[#ff00ff] px-3 py-1 rounded-full text-xs font-semibold hover:bg-[#ff00ff] hover:text-white transition">
+                  View Portfolio
+                </button>
+              </div>
+
+              {/* Service Selection Dropdown */}
+              <select className="mt-2 px-2 py-1 border rounded-full text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#ff00ff] shadow-sm w-full">
+                <option>Select a Service</option>
+                <option>Classic Fade</option>
+                <option>Beard Trim</option>
+                <option>Razor Line-Up</option>
+              </select>
+            </div>
+          ))}
+        </div>
+
+        {/* View More Button Positioned Bottom-Right */}
+        <button className="absolute bottom-5 right-5 bg-black text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-800 transition">
+          View More
         </button>
       </div>
-
     </section>
   );
 };
 
-export default Pricing;
+export default Barbers;
