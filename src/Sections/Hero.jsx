@@ -45,7 +45,7 @@ const Hero = () => {
 
       {/* Right Side - Search Bar */}
       <div
-        className="relative w-full md:w-[100%] h-[30vh] md:h-full bg-cover bg-center grayscale flex justify-center items-center pt-6 md:pt-20"
+        className="relative w-full md:w-[45%] h-[30vh] md:h-full bg-cover bg-center grayscale flex justify-center items-center pt-6 md:pt-20"
         style={{ backgroundImage: `url(${heroRight})` }}
       >
         <div
