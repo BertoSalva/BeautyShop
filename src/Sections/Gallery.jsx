@@ -2,18 +2,22 @@ import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-// Hairdresser Profiles
+// Use the same image for consistency
+import heroLeft from '../assets/images/building.jpg';
+
 const hairdressers = [
-  { name: 'Jessica Williams', rating: 4.9, jobsDone: 180, isOnline: true, image: '/assets/hairdresser1.jpg' },
-  { name: 'Emily Davis', rating: 4.7, jobsDone: 140, isOnline: true, image: '/assets/hairdresser2.jpg' },
-  { name: 'Sophia Miller', rating: 5.0, jobsDone: 220, isOnline: true, image: '/assets/hairdresser3.jpg' },
-  { name: 'Olivia Taylor', rating: 4.6, jobsDone: 110, isOnline: false, image: '/assets/hairdresser4.jpg' },
+  { name: 'Emma Robinson', rating: 5.0, jobsDone: 200, isOnline: true },
+  { name: 'Emma Robinson', rating: 5.0, jobsDone: 200, isOnline: true },
+  { name: 'Emma Robinson', rating: 5.0, jobsDone: 200, isOnline: true },
+  { name: 'Emma Robinson', rating: 5.0, jobsDone: 200, isOnline: true },
+  { name: 'Emma Robinson', rating: 5.0, jobsDone: 200, isOnline: true },
+  { name: 'Emma Robinson', rating: 5.0, jobsDone: 200, isOnline: true },
 ];
 
-const Gallery = () => {
+const HairStylists = () => {
   useEffect(() => {
     AOS.init({
-      offset: 200,
+      offset: 150,
       duration: 800,
       easing: 'ease-in-sine',
       delay: 100,
@@ -21,82 +25,63 @@ const Gallery = () => {
   }, []);
 
   return (
-    <section 
-      id='hairdressers' 
-      className='w-full md:px-20 px-10 md:py-20 py-10 flex flex-col items-center gap-10 bg-white'
-    >
-      
-      {/* Section Title */}
-      <h1 data-aos="zoom-in" className='text-5xl font-bold text-center text-black'>
-        Why Choose <span className="text-[#f273f2]">Our Hairdressers?</span>
-      </h1>
+    <section className="w-full h-screen flex flex-row relative">
+      {/* Left Image Section */}
+      <div 
+        className="relative w-1/2 h-full bg-cover bg-center"
+        style={{ backgroundImage: `url(${heroLeft})` }}
+      ></div>
 
-      {/* Subheading & Description */}
-      <p data-aos="fade-up" className='text-lg text-gray-700 text-center max-w-3xl'>
-        Elevate your style with our expert hairdressers. Whether you're looking for a **chic bob, long curls, hair extensions, or a stunning balayage**, our professionals specialize in making your dream look a reality.
-      </p>
-
-      {/* Hairdresser Profiles */}
-      <div className='grid md:grid-cols-3 grid-cols-1 gap-10 w-full max-w-6xl'>
-        {hairdressers.map((hairdresser, index) => (
-          <div 
-            key={index} 
-            className='bg-white shadow-xl rounded-2xl p-6 flex flex-col items-center text-center transform transition duration-300 hover:scale-105'
-          >
-            {/* Profile Image */}
-            <img 
-              src={hairdresser.image} 
-              alt={hairdresser.name} 
-              className='w-24 h-24 rounded-full mb-3 border-4 border-gray-200 object-cover'
-            />
-
-            {/* Online Status & Name */}
-            <div className="w-full flex items-center justify-between">
-              <h2 className='text-2xl font-bold text-black'>{hairdresser.name}</h2>
-              <span className={`w-4 h-4 rounded-full ${hairdresser.isOnline ? 'bg-green-500' : 'bg-red-500'}`} />
-            </div>
-
-            {/* Rating */}
-            <p className='text-lg text-gray-600 mt-2'>⭐ {hairdresser.rating}/5</p>
-
-            {/* Jobs Done */}
-            <p className='text-md text-gray-500 mb-4'>Clients Styled: <span className="font-semibold text-black">{hairdresser.jobsDone}</span></p>
-
-            {/* Action Buttons */}
-            <div className="flex gap-4 mt-4 w-full">
-              <button className='bg-[#f273f2] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#d95cd6] transition w-full shadow-md'>
-                Book Now
-              </button>
-              <button className='bg-white text-[#f273f2] border-2 border-[#f273f2] px-6 py-3 rounded-full font-semibold hover:bg-[#f273f2] hover:text-white transition w-full shadow-md'>
-                View Portfolio
-              </button>
-            </div>
-
-            {/* Service Selection Dropdown */}
-            <select className='mt-6 px-4 py-3 border rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#f273f2] shadow-sm w-full'>
-              <option>Select a Service</option>
-              <option>Haircut & Styling</option>
-              <option>Blowout & Curls</option>
-              <option>Hair Extensions</option>
-              <option>Balayage & Hair Coloring</option>
-            </select>
-          </div>
-        ))}
-      </div>
-
-      {/* Call to Action */}
-      <div className='mt-10 text-center'>
-        <h2 className='text-3xl font-semibold text-black'>Transform Your Hair Today</h2>
-        <p className='text-lg text-gray-700 max-w-2xl mx-auto'>
-          Let our skilled hairdressers bring your **hair goals to life**. Book a **custom styling session** and feel fabulous!
+      {/* Right Pink Section (Title & Profiles) */}
+      <div className="w-1/2 h-full bg-[#ff00ff] flex flex-col items-center px-6 py-10 text-white text-center">
+        <h1 className="text-3xl font-extrabold leading-tight text-black">
+          Find Your <br /> Perfect <span className="text-black">HairStylist</span>
+        </h1>
+        <p className="text-md mt-2 text-black font-medium">
+          From Joburg’s edgy cuts to Cape Town’s beachy waves—we speak every hair language in SA.
         </p>
-        <button className='bg-[#f273f2] text-white px-8 py-3 rounded-full font-semibold hover:bg-[#d95cd6] transition mt-4 shadow-md'>
-          Find a Hairdresser
-        </button>
-      </div>
 
+        {/* View More Button */}
+        <button className="mt-4 bg-black text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-800 transition">
+          View More
+        </button>
+
+        {/* Hairdresser Profiles Grid */}
+        <div className="grid grid-cols-3 gap-4 mt-6">
+          {hairdressers.map((hairdresser, index) => (
+            <div key={index} className="bg-white text-black shadow-md rounded-lg p-4 w-[200px] text-center">
+              {/* Profile Image Placeholder */}
+              <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center shadow-md">
+                <span className="text-gray-600 text-xs font-semibold">{hairdresser.name}</span>
+              </div>
+
+              <h2 className="text-lg font-bold mt-2">{hairdresser.name}</h2>
+              <p className="text-xs text-gray-600 mt-1">⭐ {hairdresser.rating}/5</p>
+              <p className="text-xs text-gray-500">Clients: <span className="font-semibold">{hairdresser.jobsDone}</span></p>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col gap-1 mt-2">
+                <button className="bg-[#ff00ff] text-white px-3 py-1 rounded-full text-xs font-semibold hover:bg-[#d900d9] transition">
+                  Book Now
+                </button>
+                <button className="bg-white text-[#ff00ff] border-2 border-[#ff00ff] px-3 py-1 rounded-full text-xs font-semibold hover:bg-[#ff00ff] hover:text-white transition">
+                  View Portfolio
+                </button>
+              </div>
+
+              {/* Service Selection Dropdown */}
+              <select className="mt-2 px-2 py-1 border rounded-full text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#ff00ff] shadow-sm w-full">
+                <option>Select a Glam Look</option>
+                <option>Blowout & Curls</option>
+                <option>Hair Extensions</option>
+                <option>Balayage & Hair Coloring</option>
+              </select>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 };
 
-export default Gallery;
+export default HairStylists;
