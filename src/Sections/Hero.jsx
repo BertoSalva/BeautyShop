@@ -21,7 +21,7 @@ const Hero = () => {
     >
       {/* Left Side - Content with Background Overlay */}
       <div
-        className="relative w-full md:w-[65%] h-[50vh] md:h-full bg-cover bg-center flex flex-col justify-center items-start px-4 md:px-10 max-w-3xl"
+        className="relative w-full md:w-[65%] h-[50vh] md:h-full bg-cover bg-center flex flex-col justify-center items-start px-4 md:px-10"
         style={{ backgroundImage: `url(${heroLeft})` }}
       >
         <div className="bg-black bg-opacity-60 p-4 md:p-6 rounded-lg">
@@ -45,12 +45,12 @@ const Hero = () => {
 
       {/* Right Side - Search Bar */}
       <div
-        className="relative w-full md:w-[45%] h-[30vh] md:h-full bg-cover bg-center grayscale flex justify-center items-center pt-6 md:pt-20"
+        className="relative w-full md:w-[35%] h-[30vh] md:h-full bg-cover bg-center grayscale flex justify-center items-center pt-6 md:pt-20"
         style={{ backgroundImage: `url(${heroRight})` }}
       >
         <div
           data-aos="fade-up"
-          className="flex items-center bg-white border border-gray-300 rounded-lg overflow-hidden shadow-lg w-[90%] md:max-w-lg mx-4"
+          className="flex items-center bg-white border border-gray-300 rounded-lg overflow-hidden shadow-lg w-[90%] md:w-full mx-0"
         >
           <input
             type="text"

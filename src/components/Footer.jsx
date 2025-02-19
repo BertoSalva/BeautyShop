@@ -6,7 +6,7 @@ import { Link } from 'react-scroll'
 const Footer = () => {
   return (
     <>
-      <section className='bg-slate-200 w-full md:px-20 px-10 md:py-20 py-10 flex flex-col justify-center items-center gap-6 border-[20px] border-[#f273f2]'>
+      <section className='bg-slate-200 w-full md:px-20 px-10 md:py-20 py-10 flex flex-col justify-center items-center gap-6 border-[20px] border-[#000000]'>
         <h1 className='text-black font-bold text-5xl'>Beautyshop <span className='italic text-[#f273f2]'>Salon</span></h1>
         <p className='text-lg text-center font-semibold text-slate-600'>
           Elevate your beauty routine with Beautyshop! Book top-rated beauty services, 

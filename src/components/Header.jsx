@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link as ScrollLink } from 'react-scroll';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { FaXmark, FaBars } from 'react-icons/fa6';
-import logoB from '../assets/images/logoB.png'; // Import the logoB image
+import React, { useState } from "react";
+import { Link as ScrollLink } from "react-scroll";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { FaXmark, FaBars } from "react-icons/fa6";
+import logoB from "../assets/images/logoB.png"; // Import the logo
 
 const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,18 +11,25 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setTimeout(() => setIsMenuOpen(false), 150); // ✅ Smooth closing effect
 
+  // Updated navigation items with external routing
   const navItems = [
-    { link: 'Home', path: 'home', type: 'scroll' },
-    { link: 'Nails', path: 'about', type: 'scroll' },
-    { link: 'Barber', path: 'pricing', type: 'scroll' },
-    { link: 'Make-up', path: 'services', type: 'scroll' },
-    { link: 'Hair', path: 'gallery', type: 'scroll' },
-    { link: 'About', path: 'contact', type: 'scroll' }
+    { link: "Home", path: "/", type: "router" },
+    { link: "Hair", path: "/stylists", type: "router" },
+    { link: "Nails", path: "/nail-techs", type: "router" },
+    { link: "Barber", path: "/barbers", type: "router" },
+    { link: "Make-up", path: "/makeup-artists", type: "router" },
+    { link: "About", path: "/about", type: "router" },
+    { link: "Follow Us", path: "/socials", type: "router" },
+
+    ...(isLoggedIn ? [
+      { link: "Manage Account", path: "/stylistAccount", type: "router" }
+    ] : [
+    ])
   ];
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    navigate('/');
+    navigate("/");
   };
 
   const loginButton = isLoggedIn ? (
@@ -55,29 +62,28 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
 
       {/* Desktop Navigation */}
       <ul className="lg:flex justify-center items-center gap-6 hidden">
-        {!isLoggedIn &&
-          navItems.map(({ link, path, type }) =>
-            type === 'scroll' ? (
-              <ScrollLink
-                key={path}
-                className="text-white uppercase font-semibold cursor-pointer p-2 rounded-lg hover:bg-[#f273f2] hover:text-black"
-                to={path}
-                spy={true}
-                offset={-100}
-                smooth={true}
-              >
-                {link}
-              </ScrollLink>
-            ) : (
-              <RouterLink
-                key={path}
-                to={path}
-                className="text-white uppercase font-semibold cursor-pointer p-2 rounded-lg hover:bg-[#f273f2] hover:text-black"
-              >
-                {link}
-              </RouterLink>
-            )
-          )}
+        {navItems.map(({ link, path, type }) =>
+          type === "scroll" ? (
+            <ScrollLink
+              key={path}
+              className="text-white uppercase font-semibold cursor-pointer p-2 rounded-lg hover:bg-[#f273f2] hover:text-black"
+              to={path}
+              spy={true}
+              offset={-100}
+              smooth={true}
+            >
+              {link}
+            </ScrollLink>
+          ) : (
+            <RouterLink
+              key={path}
+              to={path}
+              className="text-white uppercase font-semibold cursor-pointer p-2 rounded-lg hover:bg-[#f273f2] hover:text-black"
+            >
+              {link}
+            </RouterLink>
+          )
+        )}
       </ul>
 
       {/* Mobile Menu Icon */}
@@ -94,35 +100,34 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
 
       {/* Mobile Menu */}
       <div
-        className={`${isMenuOpen ? 'flex' : 'hidden'} w-full h-fit bg-slate-800 p-4 absolute top-[70px] left-0`}
+        className={`${isMenuOpen ? "flex" : "hidden"} w-full h-fit bg-slate-800 p-4 absolute top-[70px] left-0`}
         onClick={closeMenu}
       >
         <ul className="flex flex-col justify-center items-center gap-2 w-full">
-          {!isLoggedIn &&
-            navItems.map(({ link, path, type }) =>
-              type === 'scroll' ? (
-                <ScrollLink
-                  key={path}
-                  className="text-white uppercase font-semibold cursor-pointer p-2 rounded-lg hover:bg-[#aa9e5f] hover:text-black w-full text-center"
-                  to={path}
-                  spy={true}
-                  offset={-100}
-                  smooth={true}
-                  onClick={closeMenu}
-                >
-                  {link}
-                </ScrollLink>
-              ) : (
-                <RouterLink
-                  key={path}
-                  to={path}
-                  className="text-white uppercase font-semibold cursor-pointer p-2 rounded-lg hover:bg-[#aa9e5f] hover:text-black w-full text-center"
-                  onClick={closeMenu}
-                >
-                  {link}
-                </RouterLink>
-              )
-            )}
+          {navItems.map(({ link, path, type }) =>
+            type === "scroll" ? (
+              <ScrollLink
+                key={path}
+                className="text-white uppercase font-semibold cursor-pointer p-2 rounded-lg hover:bg-[#aa9e5f] hover:text-black w-full text-center"
+                to={path}
+                spy={true}
+                offset={-100}
+                smooth={true}
+                onClick={closeMenu}
+              >
+                {link}
+              </ScrollLink>
+            ) : (
+              <RouterLink
+                key={path}
+                to={path}
+                className="text-white uppercase font-semibold cursor-pointer p-2 rounded-lg hover:bg-[#aa9e5f] hover:text-black w-full text-center"
+                onClick={closeMenu}
+              >
+                {link}
+              </RouterLink>
+            )
+          )}
           <div className="mt-2">{loginButton}</div>
         </ul>
       </div>
