@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {jwtDecode} from "jwt-decode"; // Install with `npm install jwt-decode`
+import {jwtDecode} from "jwt-decode"; // Ensure you installed it: npm install jwt-decode
 
 const Login = ({ onLogin }) => {
   const [isSignup, setIsSignup] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState(""); 
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState("Client"); // Default role is "Client"
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -38,10 +39,11 @@ const Login = ({ onLogin }) => {
       console.log("Decoded Token:", decodedToken);
   
       // ✅ Redirect based on role
-      if (decodedToken.role == "client") {
+      // You can update these redirects as needed
+      if (decodedToken.role.toLowerCase() === "client") {
         navigate("/stylist"); // Redirect to vendor page
       } else {
-        navigate("/stylist"); // Redirect to home page
+        navigate("/stylist"); // Redirect to home page (or adjust)
       }
   
       onLogin();
@@ -50,7 +52,6 @@ const Login = ({ onLogin }) => {
     }
   };
   
-
   // ✅ Handle Signup
   const handleSignup = async () => {
     if (password !== confirmPassword) {
@@ -62,7 +63,7 @@ const Login = ({ onLogin }) => {
       const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, role }), // Send role along with credentials
       });
 
       const data = await response.json();
@@ -125,6 +126,19 @@ const Login = ({ onLogin }) => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
+              <label className="mb-2 font-semibold text-white">Role</label>
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="border p-2 rounded-full mb-4 focus:outline-none focus:ring-2 focus:ring-white"
+              >
+                <option value="Client">Client</option>
+                <option value="Barber">Barber</option>
+                <option value="NailTech">Nail-Tech</option>
+                <option value="HairStylist">Hair Stylist</option>
+                <option value="MakupArtist">Make-up Artist</option>
+
+              </select>
             </>
           )}
 
