@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { useState } from "react"; // ✅ FIX: Missing import
 
 // Import components
 import Header from "./components/Header";
@@ -7,11 +7,6 @@ import Footer from "./components/Footer";
 
 // Import sections
 import Hero from "./Sections/Hero";
-import WhyChoose from "./Sections/WhyChoose";
-import Services from "./Sections/Services";
-import Gallery from "./Sections/Gallery";
-import Testimonial from "./Sections/Testimonial";
-import Contact from "./Sections/Contact";
 
 // Import pages
 import YourAppointment from "./Sections/home/YourAppointment";
@@ -26,6 +21,9 @@ import Socials from "./Sections/home/Socials/Socials";
 import MakeupArtist from "./Sections/home/MakeupArtist/MakeupArtist";
 import About from "./Sections/home/About/About";
 import Reviews from "./Sections/home/About/Reviews";
+
+// -----For Dashboard -----//
+import Dashboard from "./Sections/Dashboard";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -63,9 +61,10 @@ const App = () => {
 
         <Route path="/appointment" element={<YourAppointment />} />
         <Route path="/login" element={<Login onLogin={() => setIsLoggedIn(true)} />} />
-      </Routes>
 
-     
+        {/* Dashboard */}
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
 
       {!isLoggedIn && <Footer />}
       </>
