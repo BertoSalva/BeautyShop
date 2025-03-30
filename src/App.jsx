@@ -17,6 +17,7 @@ import Contact from "./Sections/Contact";
 import YourAppointment from "./Sections/home/YourAppointment";
 import Login from "./Sections/home/Login";
 import VendorHome from "./Sections/vendorhome/VendorHome";
+import VendorDashboard from "./Sections/vendorhome/vendorDashboard";
 import ManageAccount from "./Sections/vendorhome/ManageAccount";
 import HairStylist from "./Sections/home/HairStylist";
 import BarberList from "./Sections/home/Barber/BarberList";
@@ -58,17 +59,16 @@ const App = () => {
         {/* Vendor (Stylist/Barber) Routes */}
         <Route path="/stylist" element={<VendorHome />} />
         <Route path="/stylistAccount" element={<ManageAccount />} />
+        <Route path="/vdashboard" element={<VendorDashboard/>}/>
 
-        {/* Authentication & Booking */}
         <Route path="/appointment" element={<YourAppointment />} />
         <Route path="/login" element={<Login onLogin={() => setIsLoggedIn(true)} />} />
       </Routes>
 
      
 
-      {/* ✅ Footer is always visible */}
-      <Footer />
-    </>
+      {!isLoggedIn && <Footer />}
+      </>
   );
 };
 
