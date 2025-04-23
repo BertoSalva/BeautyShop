@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { useState } from "react"; // ✅ FIX: Missing import
 
 // Import components
 import Header from "./components/Header";
@@ -7,16 +7,12 @@ import Footer from "./components/Footer";
 
 // Import sections
 import Hero from "./Sections/Hero";
-import WhyChoose from "./Sections/WhyChoose";
-import Services from "./Sections/Services";
-import Gallery from "./Sections/Gallery";
-import Testimonial from "./Sections/Testimonial";
-import Contact from "./Sections/Contact";
 
 // Import pages
 import YourAppointment from "./Sections/home/YourAppointment";
 import Login from "./Sections/home/Login";
 import VendorHome from "./Sections/vendorhome/VendorHome";
+import VendorDashboard from "./Sections/vendorhome/vendorDashboard";
 import ManageAccount from "./Sections/vendorhome/ManageAccount";
 import HairStylist from "./Sections/home/HairStylist";
 import BarberList from "./Sections/home/Barber/BarberList";
@@ -25,6 +21,9 @@ import Socials from "./Sections/home/Socials/Socials";
 import MakeupArtist from "./Sections/home/MakeupArtist/MakeupArtist";
 import About from "./Sections/home/About/About";
 import Reviews from "./Sections/home/About/Reviews";
+
+// -----For Dashboard -----//
+import Dashboard from "./Sections/Dashboard";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -58,17 +57,17 @@ const App = () => {
         {/* Vendor (Stylist/Barber) Routes */}
         <Route path="/stylist" element={<VendorHome />} />
         <Route path="/stylistAccount" element={<ManageAccount />} />
+        <Route path="/vdashboard" element={<VendorDashboard/>}/>
 
-        {/* Authentication & Booking */}
         <Route path="/appointment" element={<YourAppointment />} />
         <Route path="/login" element={<Login onLogin={() => setIsLoggedIn(true)} />} />
+
+        {/* Dashboard */}
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
 
-     
-
-      {/* ✅ Footer is always visible */}
-      <Footer />
-    </>
+      {!isLoggedIn && <Footer />}
+      </>
   );
 };
 

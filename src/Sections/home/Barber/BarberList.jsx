@@ -18,6 +18,10 @@ const BarberList = () => {
         return res.json();
       })
       .then((data) => {
+        console.log("Fetched barber data:", data); // Log entire response
+        data.forEach((barber, index) => {
+          console.log(`Barber ${index + 1}:`, barber); // Log each individual barber
+        });
         setBarbers(data);
         setLoading(false);
       })
@@ -49,6 +53,7 @@ const BarberList = () => {
             View More
           </button>
         </div>
+
         {/* Overflow container for Barber Cards */}
         <div className="flex-1 mt-6 overflow-auto">
           {loading ? (
@@ -68,7 +73,6 @@ const BarberList = () => {
                   {barber.location && (
                     <p className="text-sm text-gray-500">{barber.location}</p>
                   )}
-                  {/* Static details - adjust as needed */}
                   <p className="text-sm text-gray-500">⭐ 5/5</p>
                   <p className="text-sm text-gray-600">Clients Served: 300</p>
                   <div className="mt-4 flex justify-center gap-2">

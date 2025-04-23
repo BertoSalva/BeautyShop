@@ -2,7 +2,13 @@ import React, { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useNavigate } from 'react-router-dom';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
+import {
+  FaUserCog,
+  FaCalendarCheck,
+  FaCut,
+  FaClipboardList,
+} from 'react-icons/fa';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -14,17 +20,10 @@ const VendorHome = () => {
   const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
-    AOS.init({
-      offset: 150,
-      duration: 1000,
-      easing: 'ease-in-out',
-      delay: 100,
-    });
-
+    AOS.init();
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
       setToken(storedToken);
-
       try {
         const decoded = jwtDecode(storedToken);
         setUserId(decoded.nameid);
@@ -62,39 +61,31 @@ const VendorHome = () => {
   }, [token, userId, userRole]);
 
   return (
-    <section 
+    <section
       className='w-full flex flex-col md:px-20 px-10 md:py-20 py-10 relative overflow-hidden'
       style={{ background: '#fbd0fb' }}
     >
-      {/* Header Section */}
+      {/* Header */}
       <div className='flex justify-between items-center mb-6'>
         <h1 className='text-4xl font-bold text-black'>Welcome to Your Account ✂️💅</h1>
         {token && (
           <button
             className="bg-black text-white px-6 py-3 rounded-full font-bold hover:bg-gray-800 transition"
-            onClick={() => navigate('/stylistAccount')} 
+            onClick={() => navigate('/stylistAccount')}
           >
             Manage Account
           </button>
         )}
       </div>
 
-      {/* Token Debug Display (optional) */}
-      {/* {token && (
-        <div className='bg-white p-6 rounded-lg shadow-md mb-6'>
-          <h2 className='text-xl font-bold text-black'>Token Data:</h2>
-          <p className='text-gray-700 break-words'>{token}</p>
-        </div>
-      )} */}
-
-      {/* Live Bookings Display */}
+      {/* Live Bookings */}
       <h2 className='text-3xl font-bold text-black mt-16'>Upcoming Appointments</h2>
       <div className="grid md:grid-cols-2 grid-cols-1 gap-6 w-full max-w-4xl mt-6">
         {bookings.length === 0 ? (
           <p className="text-gray-700 text-lg col-span-full">No bookings yet.</p>
         ) : (
           bookings.map((b, index) => (
-            <div 
+            <div
               key={index}
               data-aos="fade-up"
               className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center text-center transition transform hover:scale-105"
@@ -121,6 +112,41 @@ const VendorHome = () => {
             </div>
           ))
         )}
+      </div>
+
+      {/* Dashboard Links */}
+      <div className="bg-white shadow-md rounded-lg p-4 mt-20">
+        <h2 className="text-xl font-semibold text-black mb-4">Quick Access</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <button
+            onClick={() => navigate('/stylistAccount')}
+            className="flex flex-col items-center justify-center bg-[#fff0f8] text-black border-2 border-black p-4 rounded-lg hover:bg-pink-100"
+          >
+            <FaUserCog className="text-2xl mb-2" />
+            <span className="text-sm font-semibold">Manage Account</span>
+          </button>
+          <button
+            onClick={() => navigate('/manage-bookings')}
+            className="flex flex-col items-center justify-center bg-[#fff0f8] text-black border-2 border-black p-4 rounded-lg hover:bg-pink-100"
+          >
+            <FaCalendarCheck className="text-2xl mb-2" />
+            <span className="text-sm font-semibold">Manage Bookings</span>
+          </button>
+          <button
+            onClick={() => navigate('/service-management')}
+            className="flex flex-col items-center justify-center bg-[#fff0f8] text-black border-2 border-black p-4 rounded-lg hover:bg-pink-100"
+          >
+            <FaCut className="text-2xl mb-2" />
+            <span className="text-sm font-semibold">Service Management</span>
+          </button>
+          <button
+            onClick={() => navigate('/more-options')}
+            className="flex flex-col items-center justify-center bg-[#fff0f8] text-black border-2 border-black p-4 rounded-lg hover:bg-pink-100"
+          >
+            <FaClipboardList className="text-2xl mb-2" />
+            <span className="text-sm font-semibold">More Options</span>
+          </button>
+        </div>
       </div>
     </section>
   );
