@@ -21,6 +21,7 @@ import Socials from "./Sections/home/Socials/Socials";
 import MakeupArtist from "./Sections/home/MakeupArtist/MakeupArtist";
 import About from "./Sections/home/About/About";
 import Reviews from "./Sections/home/About/Reviews";
+import AppointmentDetails from "./components/Dashboard/AppointmentSummary";
 
 // -----For Dashboard -----//
 import Dashboard from "./Sections/Dashboard";
@@ -64,6 +65,8 @@ const App = () => {
 
         {/* Dashboard */}
         <Route path="/dashboard" element={<Dashboard />} />
+
+        <Route path="/appointment-details" element={<AppointmentDetails />} />
       </Routes>
 
       {!isLoggedIn && <Footer />}

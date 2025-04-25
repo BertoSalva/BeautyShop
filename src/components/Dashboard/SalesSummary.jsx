@@ -38,7 +38,7 @@ const SalesSummary = () => {
                 style={{ backgroundColor: item.color }}
               ></span>
               <div className="text-sm text-gray-600">{item.name}</div>
-              <div className="text-sm font-semibold text-gray-800">₹{item.value}</div>
+              <div className="text-sm font-semibold text-gray-800">R{item.value}</div>
             </div>
           ))}
         </div>
