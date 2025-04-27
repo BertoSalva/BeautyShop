@@ -1,5 +1,6 @@
 // src/Sections/Package.jsx
 
+import React from 'react';
 
 const plans = [
   {
@@ -16,7 +17,7 @@ const plans = [
   },
   {
     title: "90-Day Trial",
-    price: "R0",
+    price: "R150",
     duration: "90 days",
     features: [
       "Enhanced visibility",
@@ -43,7 +44,8 @@ const plans = [
 
 const Package = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start py-12 bg-gradient-to-b from-green-700 to-green-600 text-white">
+    <div className="min-h-screen flex flex-col items-center justify-start py-12 bg-[#f273f2] text-white">
+      {/* Header Section */}
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold mb-2">You're almost there</h1>
         <p className="text-md">
@@ -55,7 +57,10 @@ const Package = () => {
       {/* Plans Section */}
       <div className="flex flex-wrap justify-center gap-8">
         {plans.map((plan, index) => (
-          <div key={index} className={`bg-white text-gray-800 rounded-xl p-6 w-[280px] flex flex-col justify-between shadow-lg ${plan.highlight ? 'relative' : ''}`}>
+          <div
+            key={index}
+            className={`bg-white text-gray-800 rounded-xl p-6 w-[280px] flex flex-col justify-between shadow-lg relative`}
+          >
             {/* Highlight Ribbon */}
             {plan.highlight && (
               <div className="absolute top-0 right-0 bg-yellow-400 text-xs font-bold text-gray-800 px-2 py-1 rounded-tr-xl rounded-bl-xl">
@@ -73,19 +78,19 @@ const Package = () => {
             <ul className="text-sm text-gray-600 mb-6 space-y-2">
               {plan.features.map((feature, i) => (
                 <li key={i} className="flex items-center">
-                  <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span> {feature}
+                  <span className="w-2 h-2 bg-[#ff00ff] rounded-full mr-2"></span> {feature}
                 </li>
               ))}
             </ul>
 
-            <button className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg text-sm font-semibold transition">
+            <button className="bg-[#ff00ff] hover:bg-pink-700 text-white py-2 px-4 rounded-lg text-sm font-semibold transition">
               {plan.buttonText}
             </button>
           </div>
         ))}
       </div>
 
-      {/* Contact Support Text */}
+      {/* Footer Text */}
       <p className="mt-10 text-sm text-gray-200">
         Questions about our plans? <a href="#" className="underline">Contact our support team</a>
       </p>
