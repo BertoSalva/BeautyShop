@@ -1,6 +1,5 @@
 // src/Sections/Payment.jsx
 
-import React from 'react';
 
 const Payment = () => {
   return (

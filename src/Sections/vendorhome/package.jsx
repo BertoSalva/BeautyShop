@@ -1,6 +1,7 @@
 // src/Sections/Package.jsx
 
-import React from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const plans = [
   {
@@ -43,9 +44,17 @@ const plans = [
 ];
 
 const Package = () => {
+  const [selectedPlan, setSelectedPlan] = useState(null); // Track which plan is clicked
+  const navigate = useNavigate(); // For page redirection
+
+  const handleConfirm = () => {
+    // Redirect to /payment after clicking Yes
+    navigate('/payment');
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-start py-12 bg-[#f273f2] text-white">
-      {/* Header Section */}
+      {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold mb-2">You're almost there</h1>
         <p className="text-md">
@@ -54,21 +63,19 @@ const Package = () => {
         </p>
       </div>
 
-      {/* Plans Section */}
+      {/* Plans */}
       <div className="flex flex-wrap justify-center gap-8">
         {plans.map((plan, index) => (
           <div
             key={index}
-            className={`bg-white text-gray-800 rounded-xl p-6 w-[280px] flex flex-col justify-between shadow-lg relative`}
+            className={`bg-white text-gray-800 rounded-xl p-6 w-[280px] flex flex-col justify-between shadow-lg relative transform transition-all duration-300 hover:scale-105 hover:-translate-y-2`}
           >
-            {/* Highlight Ribbon */}
             {plan.highlight && (
               <div className="absolute top-0 right-0 bg-yellow-400 text-xs font-bold text-gray-800 px-2 py-1 rounded-tr-xl rounded-bl-xl">
                 RECOMMENDED
               </div>
             )}
 
-            {/* Plan Content */}
             <div className="flex flex-col items-center mb-6">
               <h2 className="text-xl font-bold">{plan.title}</h2>
               <p className="text-2xl font-extrabold mt-2">{plan.price}</p>
@@ -83,17 +90,47 @@ const Package = () => {
               ))}
             </ul>
 
-            <button className="bg-[#ff00ff] hover:bg-pink-700 text-white py-2 px-4 rounded-lg text-sm font-semibold transition">
+            <button
+              onClick={() => setSelectedPlan(plan.title)}
+              className="bg-[#ff00ff] hover:bg-pink-700 text-white py-2 px-4 rounded-lg text-sm font-semibold transition"
+            >
               {plan.buttonText}
             </button>
           </div>
         ))}
       </div>
 
-      {/* Footer Text */}
+      {/* Footer */}
       <p className="mt-10 text-sm text-gray-200">
         Questions about our plans? <a href="#" className="underline">Contact our support team</a>
       </p>
+
+      {/* Modal */}
+      {selectedPlan && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+          <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center text-gray-800">
+            <h2 className="text-xl font-bold mb-4">Confirm {selectedPlan} Plan</h2>
+            <p className="text-sm text-gray-600 mb-6">
+              Are you sure you want to select the {selectedPlan.toLowerCase()} plan? You will have limited visibility and features.
+            </p>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={() => setSelectedPlan(null)}
+                className="border border-gray-400 px-6 py-2 rounded-md text-sm hover:bg-gray-100"
+              >
+                No
+              </button>
+              <button
+                onClick={handleConfirm}
+                className="bg-black text-white px-6 py-2 rounded-md text-sm hover:bg-gray-900"
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

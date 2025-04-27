@@ -17,7 +17,7 @@ const menuItems = [
   { label: 'Invoices', icon: <HiOutlineDocumentReport />, to: '/invoices' },
   { label: 'Services', icon: <HiOutlineScissors />, to: '/services' },
   { label: 'Promote', icon: <HiOutlineSpeakerphone />, to: '/promote' },
-  { label: 'Explore', icon: <HiOutlineGlobeAlt />, to: '/explore' },
+  { label: 'Pricing', icon: <HiOutlineGlobeAlt />, to: '/packages' },
 ];
 
 const Sidebar = () => {
