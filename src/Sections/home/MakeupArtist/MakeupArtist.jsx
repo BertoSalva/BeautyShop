@@ -10,7 +10,7 @@ const MakeupArtist = () => {
 
   useEffect(() => {
     // Fetch users with role "MakupArtist" (as per your dropdown)
-    fetch(`${API_BASE_URL}/auth/users/role/MakupArtist`)
+    fetch(`${API_BASE_URL}/auth/users/role/MakeupArtist`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch makeup artists.");

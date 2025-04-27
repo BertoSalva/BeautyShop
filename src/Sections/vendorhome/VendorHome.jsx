@@ -1,140 +1,121 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaUserCog, FaCalendarCheck, FaCut, FaClipboardList, FaMoneyBillWave } from "react-icons/fa";
+import React, { useEffect, useState } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import {
+  FaUserCog,
+  FaCalendarCheck,
+  FaCut,
+  FaClipboardList,
+} from 'react-icons/fa';
 
-const dummyData = {
-  revenue: {
-    total: 18000,
-    claimable: 12000,
-    withdrawn: 6000,
-  },
-  visits: {
-    upcoming: 7,
-    completed: 8,
-    noShows: 3,
-    cancelled: 2,
-  },
-  appointments: [
-    { time: "11:49 AM", name: "Tarak Mehta", price: 500, status: "" },
-    { time: "12:15 PM", name: "Krishnan Iyer", price: 1000, status: "Cancelled" },
-    { time: "1:00 PM", name: "Sundar Lall", price: 500, status: "No-show" },
-    { time: "2:30 PM", name: "Pinku", price: 500, status: "" },
-    { time: "2:30 PM", name: "Patrakaar Popatlal", price: 100, status: "" },
-    { time: "3:00 PM", name: "Asit Kumar Modi", price: 500, status: "" },
-  ],
-};
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export default function VendorHome() {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [profilePictureUrl, setProfilePictureUrl] = useState("");
+const VendorHome = () => {
   const navigate = useNavigate();
+  const [token, setToken] = useState(null);
+  const [bookings, setBookings] = useState([]);
+  const [userId, setUserId] = useState(null);
+  const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
-    try {
-      const decoded = JSON.parse(atob(token.split('.')[1]));
-      const imageUrl = decoded?.profilePictureUrl;
-      if (imageUrl) {
-        setProfilePictureUrl(imageUrl);
+    AOS.init();
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      setToken(storedToken);
+      try {
+        const decoded = jwtDecode(storedToken);
+        setUserId(decoded.nameid);
+        setUserRole(decoded.role);
+      } catch (err) {
+        console.error("Token decode failed:", err);
       }
-    } catch (error) {
-      console.warn("Failed to decode token or extract image");
     }
   }, []);
 
+  useEffect(() => {
+    const fetchBookings = async () => {
+      if (!token || !userId) return;
+
+      try {
+        const endpoint =
+          userRole?.toLowerCase() === "client"
+            ? `/bookings/client/${userId}`
+            : `/bookings/stylist/${userId}`;
+
+        const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await response.json();
+        setBookings(data);
+      } catch (err) {
+        console.error("Failed to fetch bookings:", err);
+      }
+    };
+
+    fetchBookings();
+  }, [token, userId, userRole]);
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-[#fbd0fb] min-h-screen">
-      {/* Revenue */}
-      <div className="bg-white shadow-md rounded-lg p-4">
-        <h2 className="text-xl font-semibold">Revenue</h2>
-        <p className="text-2xl mt-2 font-bold text-pink-600">₹{dummyData.revenue.total}</p>
-        <div className="text-sm mt-2 space-y-1 text-black">
-          <div>Claimable: ₹{dummyData.revenue.claimable}</div>
-          <div>Withdrawn: ₹{dummyData.revenue.withdrawn}</div>
-        </div>
-        <br></br>
-        <br></br>
-        <div className="flex justify-center mt-8">
-          <button className="flex flex-col items-center bg-pink-600 text-white px-6 py-4 rounded-full hover:bg-pink-700 transition">
-            <FaMoneyBillWave className="text-4xl mb-2" />
-            <span className="text-lg font-bold">Withdraw</span>
+    <section
+      className='w-full flex flex-col md:px-20 px-10 md:py-20 py-10 relative overflow-hidden'
+      style={{ background: '#fbd0fb' }}
+    >
+      {/* Header */}
+      <div className='flex justify-between items-center mb-6'>
+        <h1 className='text-4xl font-bold text-black'>Welcome to Your Account ✂️💅</h1>
+        {token && (
+          <button
+            className="bg-black text-white px-6 py-3 rounded-full font-bold hover:bg-gray-800 transition"
+            onClick={() => navigate('/stylistAccount')}
+          >
+            Manage Account
           </button>
-        </div>
+        )}
       </div>
 
-      {/* Customers */}
-      <div className="bg-white shadow-md rounded-lg p-4">
-        <h2 className="text-xl font-semibold">Customers</h2>
-        <p className="text-2xl mt-2 font-bold text-pink-600">
-          {Object.values(dummyData.visits).reduce((a, b) => a + b)} Appointments
-        </p>
-        <div className="text-sm mt-2 space-y-1 text-black">
-          <div>Upcoming: {dummyData.visits.upcoming}</div>
-          <div>Completed: {dummyData.visits.completed}</div>
-          <div>No-shows: {dummyData.visits.noShows}</div>
-          <div>Cancelled: {dummyData.visits.cancelled}</div>
-        </div>
-        {/* Profile picture placement under Customers */}
-        <div className="mt-4 flex justify-center">
-          {profilePictureUrl ? (
-            <img
-              src={profilePictureUrl}
-              alt="Vendor Profile"
-              className="rounded-full border-4 border-pink-300 shadow-md"
-              style={{ width: "150px", height: "150px", objectFit: "cover" }}
-            />
-          ) : (
+      {/* Live Bookings */}
+      <h2 className='text-3xl font-bold text-black mt-16'>Upcoming Appointments</h2>
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-6 w-full max-w-4xl mt-6">
+        {bookings.length === 0 ? (
+          <p className="text-gray-700 text-lg col-span-full">No bookings yet.</p>
+        ) : (
+          bookings.map((b, index) => (
             <div
-              className="rounded-full bg-gray-300 flex items-center justify-center text-white"
-              style={{ width: "150px", height: "150px" }}
+              key={index}
+              data-aos="fade-up"
+              className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center text-center transition transform hover:scale-105"
             >
-              No Image
+              <h3 className="text-xl font-semibold text-black">
+                {userRole?.toLowerCase() === "client" ? b.stylistName : b.clientName}
+              </h3>
+              <p className="text-gray-600 mt-2">{b.service || "—"}</p>
+              <p className="text-gray-500 mt-1">Date: {new Date(b.time).toLocaleString()}</p>
+              <span className={`mt-3 px-4 py-2 text-sm font-bold rounded-full ${
+                b.status === "Approved" || b.status === "Confirmed"
+                  ? "bg-green-500 text-white"
+                  : b.status === "Pending"
+                  ? "bg-yellow-500 text-black"
+                  : "bg-gray-400 text-white"
+              }`}>
+                {b.status}
+              </span>
+              {b.rating && (
+                <p className="mt-2 text-sm text-purple-700 font-semibold">
+                  Rated: {b.rating} ⭐
+                </p>
+              )}
             </div>
-          )}
-        </div>
-      </div>
-
-      {/* Appointments */}
-      <div className="bg-white shadow-md rounded-lg p-4 md:row-span-2">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-black">Appointments</h2>
-          <button className="text-sm bg-black text-white px-3 py-1 rounded-full hover:bg-pink-600 transition">Add new</button>
-        </div>
-        <div className="mt-2 mb-2">
-          <input className="w-full p-2 border-2 border-black rounded-full" placeholder="Search customer" />
-        </div>
-        <div className="space-y-2">
-          {dummyData.appointments.map((appt, idx) => (
-            <div
-              key={idx}
-              className="flex justify-between items-center border-2 border-black rounded-lg p-2 text-sm bg-[#fff0f8]"
-            >
-              <div>
-                <div className="font-medium text-black">{appt.time}</div>
-                <div className="text-gray-600">{appt.name}</div>
-              </div>
-              <div className="text-right">
-                <div
-                  className={`font-bold ${
-                    appt.status === "Cancelled"
-                      ? "text-red-500"
-                      : appt.status === "No-show"
-                      ? "text-gray-500"
-                      : "text-black"
-                  }`}
-                >
-                  {appt.status || `₹${appt.price}`}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+          ))
+        )}
       </div>
 
       {/* Dashboard Links */}
-      <div className="bg-white shadow-md rounded-lg p-4 md:col-span-2">
+      <div className="bg-white shadow-md rounded-lg p-4 mt-20">
         <h2 className="text-xl font-semibold text-black mb-4">Quick Access</h2>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <button
@@ -167,6 +148,8 @@ export default function VendorHome() {
           </button>
         </div>
       </div>
-    </div>
+    </section>
   );
-}
+};
+
+export default VendorHome;
