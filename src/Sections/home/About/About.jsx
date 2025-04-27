@@ -28,9 +28,9 @@ const About = () => {
 
         <h2 className="text-2xl md:text-4xl font-bold mt-8 drop-shadow-lg">Why Choose Us?</h2>
         <p className="text-sm md:text-base leading-relaxed mt-2 drop-shadow-md">
-          🖤 Ubuntu in Action – We treat every client like family. <br />
-          🔒 Easy & Secure – Seamless bookings, real-time updates, and 24/7 support. <br />
-          💖 A portion of every purchase supports local beauty entrepreneurs.
+          Ubuntu in Action – We treat every client like family. <br />
+          Easy & Secure – Seamless bookings, real-time updates, and 24/7 support. <br />
+          A portion of every purchase supports local beauty entrepreneurs.
         </p>
 
         <h2 className="text-2xl md:text-4xl font-bold mt-8 drop-shadow-lg">Need Help?</h2>
@@ -42,7 +42,7 @@ const About = () => {
         {/* Link to Reviews Page */}
         <div className="mt-6">
           <Link to="/reviews" className="text-lg font-semibold text-yellow-300 hover:text-yellow-500 transition">
-            ⭐ Read What Our Clients Say →
+            Read What Our Clients Say →
           </Link>
         </div>
       </div>
