@@ -42,7 +42,7 @@ const Socials = () => {
         </div>
 
         {/* Call to Action */}
-        <p className="text-white text-md md:text-lg mt-4 italic">Follow us on social media for the latest updates! 💖</p>
+        <p className="text-white text-md md:text-lg mt-4 italic">Follow us on social media for the latest updates! </p>
       </div>
     </section>
   );
