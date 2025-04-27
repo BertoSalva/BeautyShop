@@ -45,9 +45,9 @@ const Login = ({ onLogin }) => {
 
       // Navigate based on role
       if (decodedToken.role.toLowerCase() === "client") {
-        navigate("/stylist");
+        navigate("/dashboard");
       } else {
-        navigate("/stylist");
+        navigate("/dashboard");
       }
 
       onLogin();
