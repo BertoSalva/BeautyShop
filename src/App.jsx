@@ -22,6 +22,7 @@ import MakeupArtist from "./Sections/home/MakeupArtist/MakeupArtist";
 import About from "./Sections/home/About/About";
 import Reviews from "./Sections/home/About/Reviews";
 import AppointmentDetails from "./components/Dashboard/AppointmentSummary";
+import Package from "./Sections/vendorhome/package";
 
 // -----For Dashboard -----//
 import Dashboard from "./Sections/Dashboard";
@@ -65,6 +66,8 @@ const App = () => {
 
         {/* Dashboard */}
         <Route path="/dashboard" element={<Dashboard />} />
+
+        <Route path="/packages" element={<Package />} />
 
         <Route path="/appointment-details" element={<AppointmentDetails />} />
       </Routes>
