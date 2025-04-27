@@ -1,6 +1,7 @@
 // src/components/Dashboard/VisitsSummary.jsx
 
 import { PieChart, Pie, Cell } from 'recharts';
+import { Link } from 'react-router-dom';
 
 const data = [
   { name: 'Upcoming', value: 7, color: '#06b6d4' },     // teal
@@ -48,7 +49,10 @@ const VisitsSummary = () => {
 
       {/* Analytics Link */}
       <div className="mt-4">
-        <a href="#" className="text-sm text-blue-500 hover:underline">Analytics</a>
+        {/* <a href="#" className="text-sm text-blue-500 hover:underline">Analytics</a> */}
+        <Link to="/appointment-details" className="text-sm text-blue-500 hover:underline">
+          View Appointments
+      </Link>
       </div>
     </div>
   );

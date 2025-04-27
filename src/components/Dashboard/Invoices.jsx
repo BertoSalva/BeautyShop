@@ -34,7 +34,7 @@ const Invoices = () => {
               {invoice.productCount}
             </div>
 
-            <span className="font-semibold text-gray-900">₹ {invoice.amount}</span>
+            <span className="font-semibold text-gray-900">R {invoice.amount}</span>
           </div>
         ))}
       </div>
