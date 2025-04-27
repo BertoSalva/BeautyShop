@@ -23,6 +23,7 @@ import About from "./Sections/home/About/About";
 import Reviews from "./Sections/home/About/Reviews";
 import AppointmentDetails from "./components/Dashboard/AppointmentSummary";
 import Package from "./Sections/vendorhome/package";
+import Payment from "./Sections/vendorhome/payment";
 
 // -----For Dashboard -----//
 import Dashboard from "./Sections/Dashboard";
@@ -68,6 +69,8 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
 
         <Route path="/packages" element={<Package />} />
+
+        <Route path="/payment" element={<Payment />} />
 
         <Route path="/appointment-details" element={<AppointmentDetails />} />
       </Routes>
