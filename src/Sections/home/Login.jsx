@@ -177,7 +177,20 @@ const Login = ({ onLogin }) => {
       {/* COL 3 */}
       {isSignup && (
         <div className="flex flex-col space-y-4">
-          <input type="number" placeholder="Years of Experience" value={yearsOfExperience} onChange={(e) => setYearsOfExperience(e.target.value)} className="border p-3 rounded-full" />
+          <input
+            type="number"
+            placeholder="Years of Experience"
+            value={yearsOfExperience}
+            min="0"
+            onChange={(e) => {
+              const value = e.target.value;
+              setYearsOfExperience(value < 0 ? 0 : value);
+            }}
+            className="border p-3 rounded-full"
+          />
+
+          
+
           <input type="text" placeholder="Portfolio URL" value={portfolioUrl} onChange={(e) => setPortfolioUrl(e.target.value)} className="border p-3 rounded-full" />
           <input type="text" placeholder="Available Working Hours" value={availableWorkingHours} onChange={(e) => setAvailableWorkingHours(e.target.value)} className="border p-3 rounded-full" />
           <input type="number" placeholder="Travel Radius" value={travelRadius} onChange={(e) => setTravelRadius(e.target.value)} className="border p-3 rounded-full" />
