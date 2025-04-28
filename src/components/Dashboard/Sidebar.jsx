@@ -8,6 +8,7 @@ import {
   HiOutlineScissors,
   HiOutlineSpeakerphone,
   HiOutlineGlobeAlt,
+  HiOutlineCreditCard
 } from 'react-icons/hi';
 
 const menuItems = [
@@ -18,6 +19,8 @@ const menuItems = [
   { label: 'Services', icon: <HiOutlineScissors />, to: '/services' },
   { label: 'Promote', icon: <HiOutlineSpeakerphone />, to: '/promote' },
   { label: 'Pricing', icon: <HiOutlineGlobeAlt />, to: '/packages' },
+  { label: 'Wallet', icon: <HiOutlineCreditCard />, to: '/wallet' },
+
 ];
 
 const Sidebar = () => {
