@@ -142,7 +142,21 @@ const Login = ({ onLogin }) => {
               <option value="HairStylist">Hair Stylist</option>
               <option value="MakeupArtist">Make-up Artist</option>
             </select>
-            <input type="file" accept="image/*" onChange={(e) => setProfilePictureFile(e.target.files[0])} className="text-white" />
+
+            <label className="flex items-center border p-3 rounded-full bg-white text-gray-700 cursor-pointer">
+  <span className="flex-1">
+    {profilePictureFile ? profilePictureFile.name : "Select Image"}
+  </span>
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) => setProfilePictureFile(e.target.files[0])}
+    className="hidden"
+  />
+</label>
+
+
+            <input type="text" placeholder="Certifications" value={certifications} onChange={(e) => setCertifications(e.target.value)} className="border p-3 rounded-full" />
           </>
         )}
       </div>
@@ -171,6 +185,7 @@ const Login = ({ onLogin }) => {
           </select>
           <input type="text" placeholder="Location" value={location} onChange={(e) => setLocation(e.target.value)} className="border p-3 rounded-full" />
           <input type="text" placeholder="Bio" value={bio} onChange={(e) => setBio(e.target.value)} className="border p-3 rounded-full" />
+          <input type="text" placeholder="Payment Details" value={paymentDetails} onChange={(e) => setPaymentDetails(e.target.value)} className="border p-3 rounded-full" />
         </div>
       )}
 
@@ -196,8 +211,6 @@ const Login = ({ onLogin }) => {
           <input type="number" placeholder="Travel Radius" value={travelRadius} onChange={(e) => setTravelRadius(e.target.value)} className="border p-3 rounded-full" />
           <input type="text" placeholder="Business Location" value={businessLocation} onChange={(e) => setBusinessLocation(e.target.value)} className="border p-3 rounded-full" />
           <input type="text" placeholder="Cancellation Policy" value={cancellationPolicy} onChange={(e) => setCancellationPolicy(e.target.value)} className="border p-3 rounded-full" />
-          <input type="text" placeholder="Payment Details" value={paymentDetails} onChange={(e) => setPaymentDetails(e.target.value)} className="border p-3 rounded-full" />
-          <input type="text" placeholder="Certifications" value={certifications} onChange={(e) => setCertifications(e.target.value)} className="border p-3 rounded-full" />
         </div>
       )}
 
