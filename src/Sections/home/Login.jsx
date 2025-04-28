@@ -150,7 +150,23 @@ const Login = ({ onLogin }) => {
               {/* Additional fields (optional but supported) */}
               <input type="text" placeholder="Full Name" value={fullName} onChange={(e) => setFullName(e.target.value)} className="mb-2 p-2 rounded-full" />
               <input type="text" placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="mb-2 p-2 rounded-full" />
-              <input type="text" placeholder="Language Preference" value={languagePreference} onChange={(e) => setLanguagePreference(e.target.value)} className="mb-2 p-2 rounded-full" />
+              <select
+                value={languagePreference}
+                onChange={(e) => setLanguagePreference(e.target.value)}
+                className="mb-2 p-2 rounded-full bg-white text-gray-500" >
+                <option value="">Select Language Preference</option>
+                <option value="English">English</option>
+                <option value="Afrikaans">Afrikaans</option>
+                <option value="isiZulu">isiZulu</option>
+                <option value="isiXhosa">isiXhosa</option>
+                <option value="Sesotho">Sesotho</option>
+                <option value="Setswana">Setswana</option>
+                <option value="Xitsonga">Xitsonga</option>
+                <option value="Tshivenda">Tshivenda</option>
+                <option value="Sepedi">Sepedi</option>
+                <option value="Other">Other</option>
+              </select>
+
               <input type="text" placeholder="Location" value={location} onChange={(e) => setLocation(e.target.value)} className="mb-2 p-2 rounded-full" />
               <input type="text" placeholder="Bio" value={bio} onChange={(e) => setBio(e.target.value)} className="mb-2 p-2 rounded-full" />
               <input type="number" placeholder="Years of Experience" value={yearsOfExperience} onChange={(e) => setYearsOfExperience(e.target.value)} className="mb-2 p-2 rounded-full" />
