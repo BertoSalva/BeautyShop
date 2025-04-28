@@ -144,16 +144,16 @@ const Login = ({ onLogin }) => {
             </select>
 
             <label className="flex items-center border p-3 rounded-full bg-white text-gray-700 cursor-pointer">
-  <span className="flex-1">
-    {profilePictureFile ? profilePictureFile.name : "Select Image"}
-  </span>
-  <input
-    type="file"
-    accept="image/*"
-    onChange={(e) => setProfilePictureFile(e.target.files[0])}
-    className="hidden"
-  />
-</label>
+              <span className="flex-1">
+                {profilePictureFile ? profilePictureFile.name : "Select Image"}
+              </span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setProfilePictureFile(e.target.files[0])}
+                className="hidden"
+              />
+            </label>
 
 
             <input type="text" placeholder="Certifications" value={certifications} onChange={(e) => setCertifications(e.target.value)} className="border p-3 rounded-full" />
