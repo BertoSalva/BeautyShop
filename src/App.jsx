@@ -24,6 +24,7 @@ import Reviews from "./Sections/home/About/Reviews";
 import AppointmentDetails from "./components/Dashboard/AppointmentSummary";
 import Package from "./Sections/vendorhome/package";
 import Payment from "./Sections/vendorhome/payment";
+import Wallet from "./Sections/vendorhome/wallet";
 
 // -----For Dashboard -----//
 import Dashboard from "./Sections/Dashboard";
@@ -71,6 +72,8 @@ const App = () => {
         <Route path="/packages" element={<Package />} />
 
         <Route path="/payment" element={<Payment />} />
+
+        <Route path="/wallet" element={<Wallet />} />
 
         <Route path="/appointment-details" element={<AppointmentDetails />} />
       </Routes>
