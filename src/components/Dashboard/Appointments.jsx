@@ -1,30 +1,21 @@
-// src/components/Dashboard/Appointments.jsx
-import React from 'react';
-import { FaPlus } from 'react-icons/fa';
-
-const appointments = [
-  { time: '11:49 AM', name: 'Tarak Mehta', service: 'Hair Cut by Bagha', price: 500 },
-  { time: '12:15 PM', name: 'Krishnan Iyer', service: 'Hair Cut by Bagha', price: 1000, status: 'Cancelled' },
-  { time: '1:00 PM', name: 'Sundar Lall', service: 'Hair Cut by Bagha', price: 500, status: 'No-show' },
-  { time: '2:30 PM', name: 'Pinku', service: 'Hair Cut by Bagha', price: 500 },
-  { time: '2:30 PM', name: 'Patrakaar Popatlal', service: 'Hair Cut by Bagha', price: 100 },
-  { time: '3:00 PM', name: 'Asit Kumar Modi', service: 'Hair Cut by Bagha', price: 500 },
-];
+import React, { useEffect, useState } from "react";
+import { FaPlus } from "react-icons/fa";
+import { jwtDecode } from "jwt-decode";
 
 const AppointmentItem = ({ time, name, service, price, status }) => {
   const statusStyles = {
-    'Cancelled': 'bg-red-100 text-red-600',
-    'No-show': 'bg-gray-200 text-gray-600'
+    Cancelled: "bg-red-100 text-red-600",
+    "No-show": "bg-gray-200 text-gray-600",
   };
 
   return (
     <div className="bg-white p-3 rounded-lg shadow-sm flex justify-between items-start border border-gray-100">
       <div>
-        <div className={`text-sm font-semibold ${status ? 'text-red-500' : 'text-blue-500'}`}>
-          {time}
+        <div className={`text-sm font-semibold ${status ? "text-red-500" : "text-blue-500"}`}>
+          {new Date(time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
         </div>
         <div className="text-sm font-medium text-gray-800">{name}</div>
-        <div className="text-xs text-gray-400">{service} <span className="bg-gray-200 px-1 rounded text-gray-500 text-[10px] ml-1">3</span></div>
+        <div className="text-xs text-gray-400">{service}</div>
       </div>
       <div className="text-right">
         {status && (
@@ -32,13 +23,50 @@ const AppointmentItem = ({ time, name, service, price, status }) => {
             {status}
           </span>
         )}
-        <div className="text-sm font-semibold text-gray-800 mt-2">₹ {price}</div>
+        <div className="text-sm font-semibold text-gray-800 mt-2">R {price}</div>
       </div>
     </div>
   );
 };
 
 const Appointments = () => {
+  const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setError("User not logged in");
+      setLoading(false);
+      return;
+    }
+
+    const { role, nameid } = jwtDecode(token);
+    const userId = parseInt(nameid);
+    const isClient = role.toLowerCase() === "client";
+
+    const url = isClient
+      ? `${API_BASE_URL}/bookings/client/${userId}`
+      : `${API_BASE_URL}/bookings/stylist/${userId}`;
+
+    fetch(url)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch bookings");
+        return res.json();
+      })
+      .then((data) => {
+        setAppointments(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [API_BASE_URL]);
+
   return (
     <div className="bg-white rounded-xl shadow-md p-6 w-full md:w-[500px] max-h-[620px] overflow-y-auto">
       <div className="flex justify-between items-center mb-4">
@@ -51,11 +79,11 @@ const Appointments = () => {
       {/* Date selector */}
       <div className="flex items-center gap-2 mb-3 overflow-x-auto">
         <button className="px-2">&lt;</button>
-        {['26 Tue', '27 Wed', '28 Thu', '29 Fri', '30 Sat'].map((d, i) => (
+        {["Today", "Tomorrow", "Week"].map((d, i) => (
           <button
             key={i}
             className={`px-3 py-1 rounded-lg text-sm ${
-              i === 0 ? 'bg-blue-100 text-blue-600 font-semibold' : 'text-gray-600 hover:bg-gray-100'
+              i === 0 ? "bg-blue-100 text-blue-600 font-semibold" : "text-gray-600 hover:bg-gray-100"
             }`}
           >
             {d}
@@ -78,9 +106,24 @@ const Appointments = () => {
 
       {/* Appointment List */}
       <div className="space-y-3">
-        {appointments.map((appt, index) => (
-          <AppointmentItem key={index} {...appt} />
-        ))}
+        {loading ? (
+          <p className="text-center">Loading...</p>
+        ) : error ? (
+          <p className="text-center text-red-500">{error}</p>
+        ) : appointments.length === 0 ? (
+          <p className="text-center text-gray-500">No appointments found.</p>
+        ) : (
+          appointments.map((appt, index) => (
+            <AppointmentItem
+              key={index}
+              time={appt.time}
+              name={appt.clientName || appt.stylistName}
+              service={appt.service}
+              price={appt.price}
+              status={appt.status}
+            />
+          ))
+        )}
       </div>
     </div>
   );

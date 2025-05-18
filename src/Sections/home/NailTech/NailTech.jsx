@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import nailTechImage from "../../../assets/images/Nail1.jpg"; // Replace with your actual image
 
 const NailTech = () => {
@@ -6,10 +7,10 @@ const NailTech = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const navigate = useNavigate();
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
-    // Fetch users with role "NailTech"
     fetch(`${API_BASE_URL}/auth/users/role/NailTech`)
       .then((res) => {
         if (!res.ok) {
@@ -43,6 +44,7 @@ const NailTech = () => {
         <p className="text-md md:text-lg text-gray-700 mt-3">
           Whether it's a fresh set of acrylics, classic gel nails, or intricate nail art—we've got your style covered.
         </p>
+
         {/* Centered Button */}
         <div className="mt-4 flex justify-center">
           <button className="bg-black text-white px-6 py-3 font-semibold rounded-lg hover:bg-pink-500 transition">
@@ -50,28 +52,43 @@ const NailTech = () => {
           </button>
         </div>
 
-        {/* Nail Technician Cards */}
-        {loading ? (
-          <p className="mt-6 text-center">Loading...</p>
-        ) : error ? (
-          <p className="mt-6 text-center text-red-500">{error}</p>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 overflow-auto">
-            {nailTechs.map((tech) => (
-              <div key={tech.id} className="bg-white shadow-lg rounded-lg p-4 text-center">
-                <img
-                  src={tech.profilePictureUrl || "https://via.placeholder.com/64"}
-                  alt={tech.fullName || "Nail Technician"}
-                  className="w-16 h-16 mx-auto rounded-full object-cover mb-4"
-                />
-                <h3 className="text-lg font-bold mt-2">{tech.fullName}</h3>
-                {tech.location && (
-                  <p className="text-sm text-gray-500">{tech.location}</p>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
+        {/* Technician Cards */}
+        <div className="flex-1 mt-6 overflow-auto">
+          {loading ? (
+            <p className="text-center">Loading...</p>
+          ) : error ? (
+            <p className="text-center text-red-500">{error}</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {nailTechs.map((tech) => (
+                <div key={tech.id} className="bg-white shadow-lg rounded-lg p-4 text-center">
+                  <img
+                    src={tech.profilePictureUrl || "https://via.placeholder.com/64"}
+                    alt={tech.fullName || "Nail Technician"}
+                    className="w-16 h-16 mx-auto rounded-full object-cover mb-4"
+                  />
+                  <h3 className="text-lg font-bold mt-2">{tech.fullName}</h3>
+                  {tech.location && (
+                    <p className="text-sm text-gray-500">{tech.location}</p>
+                  )}
+                  <p className="text-sm text-yellow-600">⭐ Rating: {tech.rating ?? 0}</p>
+                  <p className="text-sm text-gray-600">👁️ Visits: {tech.visits ?? 0}</p>
+                  <div className="mt-4 flex justify-center gap-2">
+                    <button
+                      onClick={() => navigate(`/book/${tech.id}`)}
+                      className="bg-pink-600 text-white px-4 py-2 rounded-lg text-sm"
+                    >
+                      Book Now
+                    </button>
+                    <button className="border border-pink-600 text-pink-600 px-4 py-2 rounded-lg text-sm">
+                      View Portfolio
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );

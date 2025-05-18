@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+
 
 const BookingPage = () => {
   const { stylistId } = useParams(); // 👈 grabs /book/:stylistId
@@ -12,7 +14,7 @@ const BookingPage = () => {
 
   useEffect(() => {
     // Fetch stylist details (optional, if you want to display info)
-    fetch(`${API_BASE_URL}/auth/users/${stylistId}`)
+    fetch(`${API_BASE_URL}/auth/user/${stylistId}`)
       .then((res) => res.json())
       .then((data) => setStylist(data))
       .catch((err) => console.error(err));
@@ -21,12 +23,15 @@ const BookingPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const clientId = localStorage.getItem("userId"); // 👈 Assuming you stored client id after login
+   const token = localStorage.getItem("token");
 
-    if (!clientId) {
-      alert("Please login first!");
-      return;
-    }
+if (!token) {
+  alert("Please login first!");
+  return;
+}
+
+const decoded = jwtDecode(token);
+const clientId = decoded.nameid;
 
     const bookingData = {
       clientId: parseInt(clientId),
@@ -36,7 +41,7 @@ const BookingPage = () => {
     };
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/bookings/create`, {
+      const res = await fetch(`${API_BASE_URL}/bookings/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

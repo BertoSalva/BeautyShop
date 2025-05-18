@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import stylistImage from "../../assets/images/hairStlylist1.jpg";
 
 const HairStylist = () => {
@@ -6,10 +7,10 @@ const HairStylist = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const navigate = useNavigate();
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
-    // Fetch users with role "HairStylist"
     fetch(`${API_BASE_URL}/auth/users/role/HairStylist`)
       .then((res) => {
         if (!res.ok) {
@@ -43,14 +44,13 @@ const HairStylist = () => {
         <p className="text-md md:text-lg text-gray-700 mt-3">
           From Joburg’s edgy cuts to Cape Town’s beachy waves—we speak every hair language in SA.
         </p>
-        {/* Centered Button */}
+
         <div className="mt-4 flex justify-center">
           <button className="bg-black text-white px-6 py-3 font-semibold rounded-lg hover:bg-pink-500 transition">
             View More
           </button>
         </div>
 
-        {/* Overflow Container for Stylist Cards */}
         <div className="flex-1 mt-6 overflow-auto">
           {loading ? (
             <p className="text-center">Loading...</p>
@@ -69,6 +69,19 @@ const HairStylist = () => {
                   {stylist.location && (
                     <p className="text-sm text-gray-500">{stylist.location}</p>
                   )}
+                  <p className="text-sm text-yellow-600">⭐ Rating: {stylist.rating ?? 0}</p>
+                  <p className="text-sm text-gray-600">👁️ Visits: {stylist.visits ?? 0}</p>
+                  <div className="mt-4 flex justify-center gap-2">
+                    <button
+                      onClick={() => navigate(`/book/${stylist.id}`)}
+                      className="bg-pink-600 text-white px-4 py-2 rounded-lg text-sm"
+                    >
+                      Book Now
+                    </button>
+                    <button className="border border-pink-600 text-pink-600 px-4 py-2 rounded-lg text-sm">
+                      View Portfolio
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>

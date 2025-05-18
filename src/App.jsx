@@ -25,9 +25,12 @@ import AppointmentDetails from "./components/Dashboard/AppointmentSummary";
 import Package from "./Sections/vendorhome/package";
 import Payment from "./Sections/vendorhome/payment";
 import Wallet from "./Sections/vendorhome/wallet";
+import Appointment from "./components/Dashboard/Appointments";
 
 // -----For Dashboard -----//
 import Dashboard from "./Sections/Dashboard";
+
+import BookingPage from "./Sections/BookingPage"; // adjust path if needed
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -62,6 +65,7 @@ const App = () => {
         <Route path="/stylist" element={<VendorHome />} />
         <Route path="/stylistAccount" element={<ManageAccount />} />
         <Route path="/vdashboard" element={<VendorDashboard/>}/>
+        <Route path="/appoint" element={<Appointment/>}/>
 
         <Route path="/appointment" element={<YourAppointment />} />
         <Route path="/login" element={<Login onLogin={() => setIsLoggedIn(true)} />} />
@@ -74,6 +78,7 @@ const App = () => {
         <Route path="/payment" element={<Payment />} />
 
         <Route path="/wallet" element={<Wallet />} />
+        <Route path="/book/:stylistId" element={<BookingPage />} />
 
         <Route path="/appointment-details" element={<AppointmentDetails />} />
       </Routes>
