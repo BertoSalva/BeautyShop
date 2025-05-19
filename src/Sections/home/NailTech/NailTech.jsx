@@ -60,7 +60,7 @@ const NailTech = () => {
             <p className="text-center text-red-500">{error}</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {nailTechs.map((tech) => (
+                          {nailTechs.map((tech) => (
                 <div key={tech.id} className="bg-white shadow-lg rounded-lg p-4 text-center">
                   <img
                     src={tech.profilePictureUrl || "https://via.placeholder.com/64"}
@@ -73,6 +73,8 @@ const NailTech = () => {
                   )}
                   <p className="text-sm text-yellow-600">⭐ Rating: {tech.rating ?? 0}</p>
                   <p className="text-sm text-gray-600">👁️ Visits: {tech.visits ?? 0}</p>
+                  <p className="text-sm text-pink-700">💅 Price: R{tech.serviceCost ?? 'N/A'}</p>
+
                   <div className="mt-4 flex justify-center gap-2">
                     <button
                       onClick={() => navigate(`/book/${tech.id}`)}
@@ -86,6 +88,7 @@ const NailTech = () => {
                   </div>
                 </div>
               ))}
+
             </div>
           )}
         </div>

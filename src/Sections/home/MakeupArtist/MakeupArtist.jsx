@@ -59,32 +59,35 @@ const MakeupArtist = () => {
             <p className="text-center text-red-500">{error}</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {makeupArtists.map((artist) => (
-                <div key={artist.id} className="bg-white shadow-lg rounded-lg p-4 text-center">
-                  <img
-                    src={artist.profilePictureUrl || "https://via.placeholder.com/64"}
-                    alt={artist.fullName || "Make-up Artist"}
-                    className="w-16 h-16 mx-auto rounded-full object-cover mb-4"
-                  />
-                  <h3 className="text-lg font-bold mt-2">{artist.fullName}</h3>
-                  {artist.location && (
-                    <p className="text-sm text-gray-500">{artist.location}</p>
-                  )}
-                  <p className="text-sm text-yellow-600">⭐ Rating: {artist.rating ?? 0}</p>
-                  <p className="text-sm text-gray-600">👁️ Visits: {artist.visits ?? 0}</p>
-                  <div className="mt-4 flex justify-center gap-2">
-                    <button
-                      onClick={() => navigate(`/book/${artist.id}`)}
-                      className="bg-pink-600 text-white px-4 py-2 rounded-lg text-sm"
-                    >
-                      Book Now
-                    </button>
-                    <button className="border border-pink-600 text-pink-600 px-4 py-2 rounded-lg text-sm">
-                      View Portfolio
-                    </button>
-                  </div>
-                </div>
-              ))}
+                        {makeupArtists.map((artist) => (
+            <div key={artist.id} className="bg-white shadow-lg rounded-lg p-4 text-center">
+              <img
+                src={artist.profilePictureUrl || "https://via.placeholder.com/64"}
+                alt={artist.fullName || "Make-up Artist"}
+                className="w-16 h-16 mx-auto rounded-full object-cover mb-4"
+              />
+              <h3 className="text-lg font-bold mt-2">{artist.fullName}</h3>
+              {artist.location && (
+                <p className="text-sm text-gray-500">{artist.location}</p>
+              )}
+              <p className="text-sm text-yellow-600">⭐ Rating: {artist.rating ?? 0}</p>
+              <p className="text-sm text-gray-600">👁️ Visits: {artist.visits ?? 0}</p>
+              <p className="text-sm text-pink-700">💰 Price: R{artist.serviceCost?.toFixed(2) ?? 'N/A'}</p>
+
+              <div className="mt-4 flex justify-center gap-2">
+                <button
+                  onClick={() => navigate(`/book/${artist.id}`)}
+                  className="bg-pink-600 text-white px-4 py-2 rounded-lg text-sm"
+                >
+                  Book Now
+                </button>
+                <button className="border border-pink-600 text-pink-600 px-4 py-2 rounded-lg text-sm">
+                  View Portfolio
+                </button>
+              </div>
+            </div>
+          ))}
+
             </div>
           )}
         </div>

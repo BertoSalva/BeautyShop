@@ -59,32 +59,35 @@ const BarberList = () => {
             <p className="text-center text-red-500">{error}</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {barbers.map((barber) => (
-                <div key={barber.id} className="bg-white shadow-lg rounded-lg p-4 text-center">
-                  <img
-                    src={barber.profilePictureUrl || "https://via.placeholder.com/64"}
-                    alt={barber.fullName || "Barber"}
-                    className="w-16 h-16 mx-auto rounded-full object-cover mb-4"
-                  />
-                  <h3 className="text-lg font-bold mt-2">{barber.fullName}</h3>
-                  {barber.location && (
-                    <p className="text-sm text-gray-500">{barber.location}</p>
-                  )}
-                  <p className="text-sm text-yellow-600">⭐ Rating: {barber.rating ?? 0}</p>
-                  <p className="text-sm text-gray-600">👁️ Visits: {barber.visits ?? 0}</p>
-                  <div className="mt-4 flex justify-center gap-2">
-                    <button
-                      onClick={() => navigate(`/book/${barber.id}`)}
-                      className="bg-gray-700 text-white px-4 py-2 rounded-lg text-sm"
-                    >
-                      Book Now
-                    </button>
-                    <button className="border border-gray-700 text-gray-700 px-4 py-2 rounded-lg text-sm">
-                      View Portfolio
-                    </button>
-                  </div>
-                </div>
-              ))}
+             {barbers.map((barber) => (
+      <div key={barber.id} className="bg-white shadow-lg rounded-lg p-4 text-center">
+        <img
+          src={barber.profilePictureUrl || "https://via.placeholder.com/64"}
+          alt={barber.fullName || "Barber"}
+          className="w-16 h-16 mx-auto rounded-full object-cover mb-4"
+        />
+        <h3 className="text-lg font-bold mt-2">{barber.fullName}</h3>
+        {barber.location && (
+          <p className="text-sm text-gray-500">{barber.location}</p>
+        )}
+        <p className="text-sm text-yellow-600">⭐ Rating: {barber.rating ?? 0}</p>
+        <p className="text-sm text-gray-600">👁️ Visits: {barber.visits ?? 0}</p>
+        <p className="text-sm text-green-600">💰 Price: R{barber.serviceCost ?? 'N/A'}</p>
+
+        <div className="mt-4 flex justify-center gap-2">
+          <button
+            onClick={() => navigate(`/book/${barber.id}`)}
+            className="bg-gray-700 text-white px-4 py-2 rounded-lg text-sm"
+          >
+            Book Now
+          </button>
+          <button className="border border-gray-700 text-gray-700 px-4 py-2 rounded-lg text-sm">
+            View Portfolio
+          </button>
+        </div>
+      </div>
+    ))}
+        
             </div>
           )}
         </div>

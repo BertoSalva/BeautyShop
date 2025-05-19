@@ -59,31 +59,34 @@ const HairStylist = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {hairstylists.map((stylist) => (
-                <div key={stylist.id} className="bg-white shadow-lg rounded-lg p-4 text-center">
-                  <img
-                    src={stylist.profilePictureUrl || "https://via.placeholder.com/64"}
-                    alt={stylist.fullName || "Hairstylist"}
-                    className="w-16 h-16 mx-auto rounded-full object-cover mb-4"
-                  />
-                  <h3 className="text-lg font-bold mt-2">{stylist.fullName}</h3>
-                  {stylist.location && (
-                    <p className="text-sm text-gray-500">{stylist.location}</p>
-                  )}
-                  <p className="text-sm text-yellow-600">⭐ Rating: {stylist.rating ?? 0}</p>
-                  <p className="text-sm text-gray-600">👁️ Visits: {stylist.visits ?? 0}</p>
-                  <div className="mt-4 flex justify-center gap-2">
-                    <button
-                      onClick={() => navigate(`/book/${stylist.id}`)}
-                      className="bg-pink-600 text-white px-4 py-2 rounded-lg text-sm"
-                    >
-                      Book Now
-                    </button>
-                    <button className="border border-pink-600 text-pink-600 px-4 py-2 rounded-lg text-sm">
-                      View Portfolio
-                    </button>
-                  </div>
-                </div>
-              ))}
+  <div key={stylist.id} className="bg-white shadow-lg rounded-lg p-4 text-center">
+    <img
+      src={stylist.profilePictureUrl || "https://via.placeholder.com/64"}
+      alt={stylist.fullName || "Hairstylist"}
+      className="w-16 h-16 mx-auto rounded-full object-cover mb-4"
+    />
+    <h3 className="text-lg font-bold mt-2">{stylist.fullName}</h3>
+    {stylist.location && (
+      <p className="text-sm text-gray-500">{stylist.location}</p>
+    )}
+    <p className="text-sm text-yellow-600">⭐ Rating: {stylist.rating ?? 0}</p>
+    <p className="text-sm text-gray-600">👁️ Visits: {stylist.visits ?? 0}</p>
+    <p className="text-sm text-pink-700">💰 Price: R{stylist.serviceCost?.toFixed(2) ?? 'N/A'}</p>
+
+    <div className="mt-4 flex justify-center gap-2">
+      <button
+        onClick={() => navigate(`/book/${stylist.id}`)}
+        className="bg-pink-600 text-white px-4 py-2 rounded-lg text-sm"
+      >
+        Book Now
+      </button>
+      <button className="border border-pink-600 text-pink-600 px-4 py-2 rounded-lg text-sm">
+        View Portfolio
+      </button>
+    </div>
+  </div>
+))}
+
             </div>
           )}
         </div>

@@ -23,7 +23,7 @@ const AppointmentItem = ({ time, name, service, price, status }) => {
             {status}
           </span>
         )}
-        <div className="text-sm font-semibold text-gray-800 mt-2">R {price}</div>
+        <div className="text-sm font-semibold text-gray-800 mt-2">R {price ?? "N/A"}</div>
       </div>
     </div>
   );
@@ -59,13 +59,36 @@ const Appointments = () => {
       })
       .then((data) => {
         setAppointments(data);
-        setLoading(false);
       })
       .catch((err) => {
         setError(err.message);
-        setLoading(false);
-      });
+      })
+      .finally(() => setLoading(false));
   }, [API_BASE_URL]);
+
+  // 👇 Fetch missing prices by looking up stylist info
+  useEffect(() => {
+    const fetchMissingPrices = async () => {
+      const updated = await Promise.all(
+        appointments.map(async (appt) => {
+          if (appt.price || !appt.stylistId) return appt;
+          try {
+            const res = await fetch(`${API_BASE_URL}/auth/user/${appt.stylistId}`);
+            if (!res.ok) throw new Error("Failed to fetch stylist");
+            const stylist = await res.json();
+            return { ...appt, price: stylist.serviceCost || 0 };
+          } catch {
+            return { ...appt, price: 0 };
+          }
+        })
+      );
+      setAppointments(updated);
+    };
+
+    if (appointments.length > 0) {
+      fetchMissingPrices();
+    }
+  }, [appointments, API_BASE_URL]);
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6 w-full md:w-[500px] max-h-[620px] overflow-y-auto">
@@ -119,7 +142,7 @@ const Appointments = () => {
               time={appt.time}
               name={appt.clientName || appt.stylistName}
               service={appt.service}
-              price={appt.price}
+              price={appt.serviceCost ?? appt.price ?? 0}
               status={appt.status}
             />
           ))
