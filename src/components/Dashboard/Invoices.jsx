@@ -1,6 +1,7 @@
 // src/components/Dashboard/Invoices.jsx
-
-import { FaPlus } from 'react-icons/fa';
+import React, { useEffect, useState } from "react";
+import { FaPlus } from "react-icons/fa";
+import { jwtDecode } from "jwt-decode";
 
 const invoiceData = [
   { id: '0000104', name: 'Tarak Mehta', serviceCount: 1, productCount: 1, amount: 3000 },
@@ -11,6 +12,48 @@ const invoiceData = [
 ];
 
 const Invoices = () => {
+  const [invoices, setInvoices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setError("User not logged in");
+      setLoading(false);
+      return;
+    }
+
+    const { nameid } = jwtDecode(token);
+    const userId = parseInt(nameid);
+
+    const url = `${API_BASE_URL}/Invoices/getVendorInvoices/${userId}`; // Adjust the route to your actual API route
+
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch invoices");
+        return res.json();
+      })
+      .then((data) => {
+        setInvoices(data); // Save the API data as-is
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [API_BASE_URL]);
+
+  if (loading) return <p>Loading invoices...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
+
+
   return (
     <div className="bg-white rounded-xl shadow-md p-6 w-full">
       <div className="flex justify-between items-center mb-4">
@@ -21,21 +64,33 @@ const Invoices = () => {
       </div>
 
       <div className="space-y-3">
-        {invoiceData.map((invoice) => (
-          <div key={invoice.id} className="flex items-center justify-between text-sm border-b pb-2">
-            <a href="#" className="text-blue-500 font-medium hover:underline">#{invoice.id}</a>
-            <span className="text-gray-700 w-40 truncate">{invoice.name}</span>
+        {invoices.map((invoice) => (
+          <details key={invoice.id} className="pa-3 group hover:bg-[lightgrey]">
+            <summary className="flex justify-between items-center cursor-pointer list-none pt-2 pb-2 px-2">
+              <div>
+                <span className="text-blue-600 font-medium">#{invoice.invoiceNumber}</span>
+                <div className="text-xs text-gray-500">{new Date(invoice.invoiceDate).toLocaleDateString()}</div>
+              </div>
+              <div className="text-right">
+                <div className="text-gray-800 font-semibold">R {invoice.total}</div>
+                <div className={`text-xs ${invoice.isPaid ? "text-green-600" : "text-red-500"}`}>
+                  {invoice.isPaid ? "Paid" : "Unpaid"}
+                </div>
+              </div>
+            </summary>
 
-            {/* Colored indicators */}
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-teal-400 inline-block"></span>
-              {invoice.serviceCount}
-              <span className="w-3 h-3 rounded-full bg-amber-400 inline-block ml-4"></span>
-              {invoice.productCount}
+            <div className="mt-3 ml-2">
+              <div className="font-semibold text-gray-700">{invoice.description}</div>
+              <ul className="list-disc ml-5 text-sm text-gray-600 space-y-1 mt-1">
+                {invoice.items.map((item) => (
+                  <li key={item.id}>
+                    {item.name} × {item.quantity} — R {item.price}
+                  </li>
+                ))}
+              </ul>
+              <button className="mt-2 text-sm text-blue-500 hover:underline Button violet">View Full Details</button>
             </div>
-
-            <span className="font-semibold text-gray-900">R {invoice.amount}</span>
-          </div>
+          </details>
         ))}
       </div>
     </div>
