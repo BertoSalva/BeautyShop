@@ -2,14 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode";
-
-const invoiceData = [
-  { id: '0000104', name: 'Tarak Mehta', serviceCount: 1, productCount: 1, amount: 3000 },
-  { id: '0000103', name: 'Aatmaram Bhide', serviceCount: 3, productCount: 0, amount: 5000 },
-  { id: '0000102', name: 'Champaklal Gada', serviceCount: 0, productCount: 2, amount: 1000 },
-  { id: '0000101', name: 'Komal Hathi', serviceCount: 2, productCount: 0, amount: 5000 },
-  { id: '0000100', name: 'Rita Reporter', serviceCount: 4, productCount: 1, amount: 4000 },
-];
+import { Link } from 'react-router-dom';
 
 const Invoices = () => {
   const [invoices, setInvoices] = useState([]);
@@ -84,11 +77,15 @@ const Invoices = () => {
               <ul className="list-disc ml-5 text-sm text-gray-600 space-y-1 mt-1">
                 {invoice.items.map((item) => (
                   <li key={item.id}>
-                    {item.name} × {item.quantity} — R {item.price}
+                    {item.name} × {item.quantity} — R {item.price} 
                   </li>
                 ))}
               </ul>
-              <button className="mt-2 text-sm text-blue-500 hover:underline Button violet">View Full Details</button>
+              <button className="mt-2 text-sm text-blue-500 hover:underline Button violet" variant="primary">
+                <Link to={`/invoices-details/${invoice.id}`}>
+                  View Details
+                </Link>
+              </button>
             </div>
           </details>
         ))}
