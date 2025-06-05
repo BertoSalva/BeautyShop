@@ -32,6 +32,7 @@ import Dashboard from "./Sections/Dashboard";
 
 import BookingPage from "./Sections/BookingPage"; // adjust path if needed
 import VendorInvoices from "./Sections/Invoicing/VendorInvoices";
+import InvoiceDetails from "./Sections/Invoicing/invoiceDetails";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -83,6 +84,7 @@ const App = () => {
 
         <Route path="/appointment-details" element={<AppointmentDetails />} />
         <Route path="/vendor-invoices" element={<VendorInvoices/>}/>
+        <Route path="/invoices-details/:invoiceId" element={<InvoiceDetails/>}/>
       </Routes>
 
       {!isLoggedIn && <Footer />}
