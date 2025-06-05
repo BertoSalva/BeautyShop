@@ -15,7 +15,7 @@ const menuItems = [
   { label: 'Dashboard', icon: <HiOutlineViewGrid />, to: '/dashboard' },
   { label: 'Calendar', icon: <HiOutlineCalendar />, to: '/calendar' },
   { label: 'Customer', icon: <HiOutlineUser />, to: '/customer' },
-  { label: 'Invoices', icon: <HiOutlineDocumentReport />, to: '/invoices' },
+  { label: 'Invoices', icon: <HiOutlineDocumentReport />, to: '/vendor-invoices' },
   { label: 'Services', icon: <HiOutlineScissors />, to: '/services' },
   { label: 'Promote', icon: <HiOutlineSpeakerphone />, to: '/promote' },
   { label: 'Pricing', icon: <HiOutlineGlobeAlt />, to: '/packages' },
@@ -30,7 +30,7 @@ const Sidebar = () => {
         myBeautyShop
       </div>
 
-      <ul className="flex flex-col gap-4">
+      <ul className="flex flex-col gap-4 pt-16">
         {menuItems.map((item) => (
           <NavLink
             key={item.label}

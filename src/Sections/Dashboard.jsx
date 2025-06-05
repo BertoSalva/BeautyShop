@@ -17,13 +17,13 @@ const Dashboard = () => {
           {/* Left Column (Charts + Invoices) */}
           <div className="flex-1 flex flex-col gap-6">
             {/* Charts Row */}
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-12">
               <SalesSummary />
               <VisitsSummary />
             </div>
-              {/* Invoices Below */}
-              <Invoices />
-            </div>
+            {/* Invoices Below */}
+            <Invoices />
+          </div>
 
           {/* Right Column (Appointments) */}
           <div className="w-full lg:w-[500px]">

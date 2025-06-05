@@ -31,6 +31,7 @@ import Appointment from "./components/Dashboard/Appointments";
 import Dashboard from "./Sections/Dashboard";
 
 import BookingPage from "./Sections/BookingPage"; // adjust path if needed
+import VendorInvoices from "./Sections/Invoicing/VendorInvoices";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -81,6 +82,7 @@ const App = () => {
         <Route path="/book/:stylistId" element={<BookingPage />} />
 
         <Route path="/appointment-details" element={<AppointmentDetails />} />
+        <Route path="/vendor-invoices" element={<VendorInvoices/>}/>
       </Routes>
 
       {!isLoggedIn && <Footer />}
