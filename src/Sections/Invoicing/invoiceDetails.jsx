@@ -29,8 +29,7 @@ const InvoiceDetails = () => {
                 return res.json();
             })
             .then(data => {
-                setInvoice(data.invoice);
-                console.log(data.invoice);
+                setInvoice(data.invoice);               
                 setLoading(false);
             })
             .catch(err => {
