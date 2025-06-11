@@ -58,8 +58,8 @@ const Invoices = () => {
 
       <div className="space-y-3">
         {invoices.map((invoice) => (
-          <details key={invoice.id} className="pa-3 group hover:bg-[lightgrey]">
-            <summary className="flex justify-between items-center cursor-pointer list-none pt-2 pb-2 px-2">
+          <details key={invoice.id} className="pa-3 group hover:bg-[lightgrey] transition-transform duration-300">
+            <summary className="flex justify-between items-center cursor-pointer list-none pt-2 pb-2 px-4">
               <div>
                 <span className="text-blue-600 font-medium">#{invoice.invoiceNumber}</span>
                 <div className="text-xs text-gray-500">{new Date(invoice.invoiceDate).toLocaleDateString()}</div>
@@ -71,17 +71,30 @@ const Invoices = () => {
                 </div>
               </div>
             </summary>
+            <hr />
+            <div className="mt-3 ml-2 px-2 pb-4">
+              <div className="font-bold text-[#f273f2] pl-2">Invoice category description: {invoice.description}</div>
+              <table className="w-full text-sm text-left text-gray-600 mt-1">
+                <thead className="border-b">
+                  <tr>
+                    <th className="px-2 py-1">Description</th>
+                    <th className="px-2 py-1 text-center">QTY</th>
+                    <th className="px-2 py-1 text-right">Price (R)</th>
+                  </tr>
+                </thead>
+                <tbody className="space-y-1">
+                  {invoice.items.map((item) => (
+                    <tr key={item.id} className="border-b">
+                      <td className="px-2 py-1">{item.name}</td>
+                      <td className="px-2 py-1 text-center">{item.quantity}</td>
+                      <td className="px-2 py-1 text-right">{item.price.toFixed(2)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
 
-            <div className="mt-3 ml-2">
-              <div className="font-semibold text-gray-700">{invoice.description}</div>
-              <ul className="list-disc ml-5 text-sm text-gray-600 space-y-1 mt-1">
-                {invoice.items.map((item) => (
-                  <li key={item.id}>
-                    {item.name} × {item.quantity} — R {item.price} 
-                  </li>
-                ))}
-              </ul>
-              <button className="mt-2 text-sm text-blue-500 hover:underline Button violet" variant="primary">
+              <br />
+              <button className="bg-[#f273f2] px-4 py-2 rounded-full hover:bg-white hover:text-black font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer" variant="primary">
                 <Link to={`/invoices-details/${invoice.id}`}>
                   View Details
                 </Link>
