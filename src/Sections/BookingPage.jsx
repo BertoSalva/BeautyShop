@@ -61,8 +61,35 @@ const BookingPage = () => {
       });
 
       if (res.ok) {
-        alert("Booking successful!");
-        navigate("/");
+        const amount = serviceCost.toFixed(2);
+
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "https://sandbox.payfast.co.za/eng/process";
+
+        const formData = {
+          merchant_id: "10034332",
+          merchant_key: "79p2v44kst9t1",
+          return_url: `${window.location.origin}/payment-success`,
+          cancel_url: `${window.location.origin}/booking-cancelled`,
+          notify_url: `${API_BASE_URL}/payfast/notify`,
+          amount,
+          item_name: `Booking with ${stylist?.fullName}`,
+          name_first: decoded?.given_name || "Client",
+          name_last: decoded?.family_name || "",
+          email_address: decoded?.email || "client@email.com",
+        };
+
+        for (const [key, value] of Object.entries(formData)) {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = key;
+          input.value = value;
+          form.appendChild(input);
+        }
+
+        document.body.appendChild(form);
+        form.submit();
       } else {
         const error = await res.json();
         alert(error.message || "Failed to create booking.");
