@@ -24,6 +24,7 @@ const Invoices = () => {
 
     const url = `${API_BASE_URL}/Invoices/getVendorInvoices/${userId}`; // Adjust the route to your actual API route
 
+    // Fetch invoices for the logged-in user
     fetch(url, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -34,7 +35,7 @@ const Invoices = () => {
         return res.json();
       })
       .then((data) => {
-        setInvoices(data); // Save the API data as-is
+        setInvoices(data);
         setLoading(false);
       })
       .catch((err) => {
@@ -42,6 +43,7 @@ const Invoices = () => {
         setLoading(false);
       });
   }, [API_BASE_URL]);
+
 
   if (loading) return <p>Loading invoices...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
@@ -51,8 +53,10 @@ const Invoices = () => {
     <div className="bg-white rounded-xl shadow-md p-6 w-full">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold text-gray-800">Invoices</h2>
-        <button className="text-sm text-blue-500 flex items-center gap-1 hover:underline">
-          Generate new <FaPlus className="text-xs" />
+        <button className="bg-[#53cf48] px-2 py-2 display-flex rounded-full hover:bg-[#7ae070] hover:text-black font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer" variant="primary">
+          <Link to={`/generate-invoice`} className="text-white display-flex">
+           Generate Invoice 
+          </Link>
         </button>
       </div>
 
@@ -65,7 +69,7 @@ const Invoices = () => {
                 <div className="text-xs text-gray-500">{new Date(invoice.invoiceDate).toLocaleDateString()}</div>
               </div>
               <div className="text-right">
-                <div className="text-gray-800 font-semibold">R {invoice.total}</div>
+                <div className="text-gray-800 font-semibold">INVOICE TOTAL: R {invoice.total}</div>
                 <div className={`text-xs ${invoice.isPaid ? "text-green-600" : "text-red-500"}`}>
                   {invoice.isPaid ? "Paid" : "Unpaid"}
                 </div>
@@ -90,12 +94,16 @@ const Invoices = () => {
                       <td className="px-2 py-1 text-right">{item.price.toFixed(2)}</td>
                     </tr>
                   ))}
+                  <tr>
+                    <td className="px-2 py-1"></td>
+                    <td className="px-2 py-1"></td>
+                    <td className="px-2 py-1 text-right font-bold">TOTAL R {invoice.total.toFixed(2)}</td>
+                  </tr>
                 </tbody>
               </table>
-
               <br />
-              <button className="bg-[#f273f2] px-4 py-2 rounded-full hover:bg-white hover:text-black font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer" variant="primary">
-                <Link to={`/invoices-details/${invoice.id}`}>
+              <button className="bg-[#f273f2] px-4 py-2 rounded-full hover:bg-[#fa8cfa] hover:text-black font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer" variant="primary">
+                <Link to={`/invoices-details/${invoice.id}/${invoice.userId}`} className="text-white">
                   View Details
                 </Link>
               </button>
