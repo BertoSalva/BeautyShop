@@ -1,8 +1,8 @@
 // src/components/Dashboard/Invoices.jsx
 import React, { useEffect, useState } from "react";
-import { FaPlus } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode";
 import { Link } from 'react-router-dom';
+import Loader from "../common/loader";
 
 const Invoices = () => {
   const [invoices, setInvoices] = useState([]);
@@ -45,17 +45,44 @@ const Invoices = () => {
   }, [API_BASE_URL]);
 
 
-  if (loading) return <p>Loading invoices...</p>;
+  if (loading) return (
+    <>
+      <div className="ml-0 flex-1 bg-gray-50 p-6 min-h-screen">
+        <div className="flex flex-col items-center justify-center pb-8 pt-20">
+          <h1 className="text-6xl font-bold text-[#f273f2]"><Loader /></h1>
+          <p className="mt-4 text-xl text-gray-700 font-bold"></p>
+          <p className="mt-2 text-gray-500"><b>Loading Invoice...</b></p>
+        </div>
+      </div>
+    </>
+  );
+
+  if (!invoices || invoices.length === 0) return (
+    <div className="ml-0 flex-1 bg-gray-50 p-6 min-h-screen">
+      <div className="flex flex-col items-center justify-center pb-8 pt-20">
+        <h1 className="text-4xl font-bold text-[#f273f2]">No invoices found.</h1>
+        <p className="mt-2 text-gray-500 pb-2 font-bold">Would you like to generate a new invoice?</p>
+        <div>
+          <button className="bg-[#53cf48] px-2 py-2 display-flex rounded-full hover:bg-[#7ae070] hover:text-black font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer" variant="primary">
+            <Link to={`/generate-invoice`} className="text-white display-flex">
+              Generate Invoice
+            </Link>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
   if (error) return <p className="text-red-500">{error}</p>;
 
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6 w-full">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-semibold text-gray-800">Invoices</h2>
+        <h2 className="text-lg font-semibold text-gray-800">Vendor Invoices</h2>
         <button className="bg-[#53cf48] px-2 py-2 display-flex rounded-full hover:bg-[#7ae070] hover:text-black font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer" variant="primary">
           <Link to={`/generate-invoice`} className="text-white display-flex">
-           Generate Invoice 
+            Generate Invoice
           </Link>
         </button>
       </div>
@@ -69,7 +96,7 @@ const Invoices = () => {
                 <div className="text-xs text-gray-500">{new Date(invoice.invoiceDate).toLocaleDateString()}</div>
               </div>
               <div className="text-right">
-                <div className="text-gray-800 font-semibold">INVOICE TOTAL: R {invoice.total}</div>
+                <div className="text-gray-800 font-semibold">Invoice total: R {invoice.total}</div>
                 <div className={`text-xs ${invoice.isPaid ? "text-green-600" : "text-red-500"}`}>
                   {invoice.isPaid ? "Paid" : "Unpaid"}
                 </div>
