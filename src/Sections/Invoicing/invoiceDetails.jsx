@@ -104,7 +104,7 @@ const InvoiceDetails = () => {
                         <h1 className="text-lg font-bold text-gray-800 mb-4 pl-2">
                             <span className="text-[#f273f2] font-bold">#{invoice.invoiceNumber}</span>
                         </h1>
-                        <div class="size-14 grow ..."></div>
+                        <div className="size-14 grow ..."></div>
                         <button className="bg-[#f273f2] px-4 py-2 rounded-full hover:bg-[#fa8cfa] hover:text-black font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer" variant="primary">
                             <Link to={`#`} className="text-white">
                                 Send Invoice
