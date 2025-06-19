@@ -12,24 +12,34 @@ import Typography from '@mui/material/Typography';
 import { Link } from "react-router-dom";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { Tooltip } from "recharts";
+import { useNavigate } from "react-router-dom";
 
 function GenerateInvoice() {
   const [rows, setRows] = useState([
     { id: Date.now(), service: "", price: "", quantity: "", lineTotal: "R 00.00" }
   ]);
 
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const [total, setTotal] = useState("R 00.00");
 
-  const ServiceInputRow = ({ index, row, onRemove }) => (
+  const [customerName, setCustomerName] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
+  const [description, setDescription] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+
+
+  const ServiceInputRow = ({ index, row, onRemove, onBlurRow }) => (
     <div className="flex flex-row gap-2 pb-2 items-center">
       <div className="flex-2">
         <TextField
           type="text"
           label="Service name"
-
           size="small"
           fullWidth
+          defaultValue={row.service}
+          onBlur={(e) => onBlurRow(index, "service", e.target.value)}
         />
       </div>
       <div className="flex-1">
@@ -37,9 +47,10 @@ function GenerateInvoice() {
           type="number"
           inputProps={{ min: 0, max: 9999 }}
           label="Price"
-
           size="small"
           fullWidth
+          defaultValue={row.price}
+          onBlur={(e) => onBlurRow(index, "price", e.target.value)}
         />
       </div>
       <div className="flex-1">
@@ -47,18 +58,19 @@ function GenerateInvoice() {
           type="number"
           inputProps={{ min: 0, max: 9999 }}
           label="Quantity"
-
           size="small"
           fullWidth
+          defaultValue={row.quantity}
+          onBlur={(e) => onBlurRow(index, "quantity", e.target.value)}
         />
       </div>
       <div className="flex-1">
         <TextField
           type="text"
           disabled
- 
           size="small"
           fullWidth
+          value={calculateLineTotal(row.price, row.quantity)}
         />
       </div>
       <div>
@@ -70,7 +82,6 @@ function GenerateInvoice() {
       </div>
     </div>
   );
-
 
 
   function addRow() {
@@ -91,6 +102,24 @@ function GenerateInvoice() {
     setRows(prev => [...prev, { id: Date.now() + Math.random(), service: "", price: "", quantity: "", lineTotal: "R 00.00" }]);
   }
 
+  function onBlurRow(index, field, value) {
+    setRows(prev => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], [field]: value };
+
+      // Recalculate totals
+      const newTotal = updated.reduce((sum, row) => {
+        const price = parseFloat(row.price || 0);
+        const qty = parseInt(row.quantity || 0);
+        const lineTotal = isNaN(price) || isNaN(qty) ? 0 : price * qty;
+        return sum + lineTotal;
+      }, 0);
+
+      setTotal(`R ${newTotal.toFixed(2)}`);
+      return updated;
+    });
+  }
+
   function removeRow(idToRemove) {
     if (rows[0].id === idToRemove) return;
     setRows(prev => prev.filter(row => row.id !== idToRemove));
@@ -102,18 +131,60 @@ function GenerateInvoice() {
   }
 
 
-  useEffect(() => {
+  async function saveInvoice() {
     const token = localStorage.getItem("token");
-
     if (!token) {
-      setError("User not logged in");
-      setLoading(false);
+      alert("User not logged in");
       return;
     }
 
-    const { nameid } = jwtDecode(token);
-    const url = `${API_BASE_URL}/Invoices/addInvoice`;
-  }, [API_BASE_URL]);
+    const decoded = jwtDecode(token);
+    const userId = decoded?.nameid;
+
+    const invoiceItems = rows.map(row => ({
+      id: 0,
+      name: row.service,
+      quantity: Number(row.quantity),
+      price: Number(row.price),
+      description: row.service,
+      createdDate: new Date().toISOString(),
+      InvoiceNumber: 0
+    }));
+
+    const invoicePayload = {
+      invoiceDate: new Date().toISOString(),
+      total: invoiceItems.reduce((sum, item) => sum + item.quantity * item.price, 0),
+      description,
+      isPaid: false,
+      userId: 2,
+      invoiceItems
+    };
+    
+    try {
+      setIsSaving(true);
+      const response = await fetch(`${API_BASE_URL}/Invoices/addInvoice`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(invoicePayload)
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save invoice.");
+      }
+
+      alert("Invoice saved successfully!");
+      navigate("/vendor-invoices");
+      // Optional: clear/reset form or redirect
+    } catch (err) {
+      console.error(err);
+      alert("There was a problem saving the invoice.");
+    } finally {
+      setIsSaving(false);
+    }
+  }
 
   const card = (
     <React.Fragment>
@@ -122,10 +193,10 @@ function GenerateInvoice() {
         <hr />
         <br />
         <div className="pb-4">
-          <TextField type="text" label="Customer name." id="customer-name" placeholder="Enter customer name..." size="small" fullWidth />
+          <TextField type="text" label="Customer name." value={customerName} onChange={(e) => setCustomerName(e.target.value)} placeholder="Enter customer name..." size="small" fullWidth />
         </div>
         <div className="pb-4">
-          <TextField type="text" label="Customer email." id="customer-email" placeholder="Enter customer email..." size="small" fullWidth />
+          <TextField type="text" label="Customer email." value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} placeholder="Enter customer email..." size="small" fullWidth />
         </div>
         <div id="invoice-items">
           {rows.map((row, index) => (
@@ -134,10 +205,20 @@ function GenerateInvoice() {
               index={index}
               row={row}
               onRemove={() => removeRow(row.id)}
+              onBlurRow={onBlurRow}
             />
           ))}
         </div>
 
+        <div className="pt-4 pb-2 flex justify-end">
+          <TextField
+            label="Total"
+            size="small"
+            value={total}
+            disabled
+            sx={{ width: '200px' }}
+          />
+        </div>
 
         <div>
           <button onClick={addRow} className="bg-[#53cf48] px-4 py-2 rounded-full hover:bg-[#7ae070] hover:text-white font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer" variant="primary">
@@ -147,8 +228,11 @@ function GenerateInvoice() {
       </CardContent>
       <hr />
       <CardActions className="flex justify-center pb-4">
-        <button disabled className="bg-[#53cf48] px-4 py-2 rounded-full hover:bg-[#7ae070] hover:text-black font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer" variant="primary">
-          Save invoice
+        <button
+          onClick={saveInvoice}
+          disabled={isSaving}
+          className="bg-[#53cf48] px-4 py-2 rounded-full hover:bg-[#7ae070] hover:text-black font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer">
+          {isSaving ? "Saving..." : "Save Invoice"}
         </button>
       </CardActions>
     </React.Fragment>

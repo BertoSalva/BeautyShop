@@ -82,8 +82,8 @@ const InvoiceDetails = () => {
     if (!invoice) return (
         <div className="ml-64 flex-1 bg-gray-50 p-6 min-h-screen">
             <div className="flex flex-col items-center justify-center pb-8 pt-20">
-                <h1 className="text-6xl font-bold text-[#f273f2] pb-2">No invoice found.</h1>
-                <p className="mt-2 text-gray-500">You do not have any invoice details.</p>
+                <h1 className="text-6xl font-bold text-[#f273f2] pb-2">Loading.</h1>
+                <p className="mt-2 text-gray-500">Invoice details Loading...</p>
             </div>
         </div>
     );
