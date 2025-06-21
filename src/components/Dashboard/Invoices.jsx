@@ -3,11 +3,14 @@ import React, { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { Link } from 'react-router-dom';
 import Loader from "../common/loader";
+import GenerateInvoiceBtn from "../common/GenerateInvoiceBtn";
 
 const Invoices = () => {
   const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [userRole, setUserRole] = useState("");
+
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
@@ -21,6 +24,10 @@ const Invoices = () => {
 
     const { nameid } = jwtDecode(token);
     const userId = parseInt(nameid);
+
+
+    const { role } = jwtDecode(token);
+    setUserRole(role.replace(/([A-Z])/g, ' $1').trim());
 
     const url = `${API_BASE_URL}/Invoices/getVendorInvoices/${userId}`; // Adjust the route to your actual API route
 
@@ -79,12 +86,9 @@ const Invoices = () => {
   return (
     <div className="bg-white rounded-xl shadow-md p-6 w-full">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-semibold text-gray-800">Vendor Invoices</h2>
-        <button className="bg-[#53cf48] px-2 py-2 display-flex rounded-full hover:bg-[#7ae070] hover:text-black font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer" variant="primary">
-          <Link to={`/generate-invoice`} className="text-white display-flex">
-            Generate Invoice
-          </Link>
-        </button>
+        <h2 className="text-lg font-semibold text-gray-800">{userRole} Invoices</h2>
+
+        <GenerateInvoiceBtn />
       </div>
 
       <div className="space-y-3">
