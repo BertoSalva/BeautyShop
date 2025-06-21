@@ -4,6 +4,9 @@ import { useParams } from 'react-router-dom';
 import Sidebar from '../../components/Dashboard/Sidebar';
 import { Link } from 'react-router-dom';
 import Loader from '../../components/common/loader';
+import CustomSnackbar from '../../components/common/snackbar';
+import BtnLoader from '../../components/common/btnLoader';
+import { jwtDecode } from 'jwt-decode';
 
 const InvoiceDetails = () => {
     const { invoiceId, userId } = useParams();
@@ -12,9 +15,54 @@ const InvoiceDetails = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+    const token = localStorage.getItem("token");
+    const [isInvoiceDownloadable, setIsInvoiceDownloadable] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
+
+    const {role} = jwtDecode(token);
+
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+    const showSnackbar = (message, severity) => {
+        setSnackbarMessage(message);
+        setSnackbarSeverity(severity);
+        setSnackbarOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') return;
+        setSnackbarOpen(false);
+    };
+    async function downloadInvoice() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/Invoices/downloadInvoice/${invoice.invoiceNumber}`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Download failed with status ${response.status}`);
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `Invoice-${invoice.invoiceNumber}.pdf`; // or .xlsx, .docx, whatever you're downloading
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error("Download failed:", error);
+        };
+    }
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
         if (!token) {
             setError("User not logged in");
             setLoading(false);
@@ -61,6 +109,55 @@ const InvoiceDetails = () => {
 
     }, [API_BASE_URL, invoiceId, userId]);
 
+    
+    async function generateInvoice() {
+        setIsSaving(true);
+
+        const generateresponse = await fetch(`${API_BASE_URL}/Invoices/generateInvoice?invoiceNumber=${invoice.invoiceNumber}&invoiceId=${invoice.id}&clientId=${invoice.userId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+        });
+
+        if (!generateresponse.ok) {
+            showSnackbar('Failed to generate invoice.', 'error')
+            setIsSaving(false);
+            throw new Error("Failed to generate invoice.");
+        }
+
+        setIsSaving(false);
+        showSnackbar('Invoice generated successfully.', 'success')
+        setIsInvoiceDownloadable(true);
+    }
+
+     async function sendInvoice() {
+        setIsSaving(true);
+        
+        const currentLocation = window.location.href;
+
+        const response = await fetch(`${API_BASE_URL}/Mail/sendInvoice/${invoice.id}?invoiceLink=${currentLocation}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+        });
+
+        if (!response.ok) {
+            showSnackbar('Failed to send invoice.', 'error')
+            setIsSaving(false);
+            throw new Error("Failed to send invoice.");
+        }
+
+        const res = await response.json();
+        setIsSaving(false);
+        showSnackbar(res.message, 'success')
+        setIsInvoiceDownloadable(true);
+    }
+
+
     if (loading) return (
         <div className="ml-64 flex-1 bg-gray-50 p-6 min-h-screen">
             <div className="flex flex-col items-center justify-center pb-8 pt-20">
@@ -105,17 +202,27 @@ const InvoiceDetails = () => {
                             <span className="text-[#f273f2] font-bold">#{invoice.invoiceNumber}</span>
                         </h1>
                         <div className="size-14 grow ..."></div>
-                        <button className="bg-[#f273f2] px-4 py-2 rounded-full hover:bg-[#fa8cfa] hover:text-black font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer" variant="primary">
-                            <Link to={`#`} className="text-white">
-                                Send Invoice
-                            </Link>
-                        </button>
+
+                        {isInvoiceDownloadable && role != "Client" ? (
+                        <button onClick={sendInvoice} className="bg-[#f273f2] text-white px-4 py-2 rounded-full hover:bg-[#fa8cfa] hover:text-white font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer" variant="primary">
+                            Send Invoice  <span>{isSaving ? <BtnLoader/> : ""}</span>
+                        </button>): ""}
+
                         <span className='pr-4' />
-                        <button className="bg-[#53cf48] px-4 py-2 rounded-full hover:bg-[#7ae070] hover:text-black font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer" variant="primary">
-                            <Link to={`#`} className="text-white">
+
+                        {isInvoiceDownloadable ? (
+                            <button
+                                onClick={downloadInvoice}
+                                className="bg-[#53cf48] text-white px-4 py-2 rounded-full hover:bg-[#7ae070] hover:text-white font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer">
                                 Download Invoice
-                            </Link>
-                        </button>
+                            </button>
+                        ) : (
+                            <button
+                                onClick={generateInvoice}
+                                className="bg-[red] text-white d-flex px-4 py-2 rounded-full hover:bg-[pink] hover:text-white font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer">
+                                Generate PDF <span>{isSaving ? <BtnLoader/> : ""}</span>
+                            </button>  
+                        )}
                     </div>
 
                     <hr className='pb-2 pt-4'></hr>
@@ -172,6 +279,13 @@ const InvoiceDetails = () => {
                     </table>
                 </div>
             </div>
+
+            <CustomSnackbar
+                open={snackbarOpen}
+                onClose={handleClose}
+                message={snackbarMessage}
+                severity={snackbarSeverity}
+            />
         </div>
     );
 };

@@ -13,11 +13,21 @@ import { Link } from "react-router-dom";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { Tooltip } from "recharts";
 import { useNavigate } from "react-router-dom";
+import AutoCompleteClientSelect from "../../components/common/AutoCompleteClientSelect";
+import BtnLoader from "../../components/common/btnLoader";
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import CustomSnackbar from "../../components/common/snackbar";
 
 function GenerateInvoice() {
   const [rows, setRows] = useState([
     { id: Date.now(), service: "", price: "", quantity: "", lineTotal: "R 00.00" }
   ]);
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
 
   const navigate = useNavigate();
   const [error, setError] = useState("");
@@ -29,6 +39,17 @@ function GenerateInvoice() {
   const [description, setDescription] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
+
+  const showSnackbar = (message, severity) => {
+    setSnackbarMessage(message);
+    setSnackbarSeverity(severity);
+    setSnackbarOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') return;
+    setSnackbarOpen(false);
+  };
 
   const ServiceInputRow = ({ index, row, onRemove, onBlurRow }) => (
     <div className="flex flex-row gap-2 pb-2 items-center">
@@ -156,10 +177,18 @@ function GenerateInvoice() {
       total: invoiceItems.reduce((sum, item) => sum + item.quantity * item.price, 0),
       description,
       isPaid: false,
-      userId: 2,
+      userId: 7,
+      VendorId: userId,
       invoiceItems
     };
-    
+
+    console.log("Invoice Payload:", invoiceItems.length);
+
+    if (invoiceItems[0].name == "") {
+      showSnackbar('Please add at least one service item to the invoice.', 'error')
+      return;
+    }
+
     try {
       setIsSaving(true);
       const response = await fetch(`${API_BASE_URL}/Invoices/addInvoice`, {
@@ -175,12 +204,14 @@ function GenerateInvoice() {
         throw new Error("Failed to save invoice.");
       }
 
-      alert("Invoice saved successfully!");
-      navigate("/vendor-invoices");
-      // Optional: clear/reset form or redirect
+      showSnackbar('Invoice saved successfully.', 'success')
+      setTimeout(() => {
+        navigate("/vendor-invoices");
+      }, 2000);
+
     } catch (err) {
       console.error(err);
-      alert("There was a problem saving the invoice.");
+      showSnackbar('There was a problem saving the invoice.', 'error')
     } finally {
       setIsSaving(false);
     }
@@ -189,14 +220,13 @@ function GenerateInvoice() {
   const card = (
     <React.Fragment>
       <CardContent>
-        <div className="pb-4">Date: {Date().toString().split('T')[0]}</div>
+        <div className="pb-4">Fill out the details below to create a new invoice for your client and their booking.</div>
         <hr />
         <br />
         <div className="pb-4">
-          <TextField type="text" label="Customer name." value={customerName} onChange={(e) => setCustomerName(e.target.value)} placeholder="Enter customer name..." size="small" fullWidth />
+          <AutoCompleteClientSelect />
         </div>
         <div className="pb-4">
-          <TextField type="text" label="Customer email." value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} placeholder="Enter customer email..." size="small" fullWidth />
         </div>
         <div id="invoice-items">
           {rows.map((row, index) => (
@@ -210,14 +240,24 @@ function GenerateInvoice() {
           ))}
         </div>
 
-        <div className="pt-4 pb-2 flex justify-end">
-          <TextField
-            label="Total"
-            size="small"
-            value={total}
-            disabled
-            sx={{ width: '200px' }}
-          />
+        <div className="flex flex-row gap-4 pb-2 items-center">
+          <div className="flex-1">
+            <span sx={{ width: "100%" }}></span>
+          </div>
+          <div className="flex-1">
+            <span sx={{ width: "100%" }}></span>
+          </div>
+          <div className="flex-1">
+            <span sx={{ width: "100%" }}></span>
+          </div>
+          <div className="pt-4 pb-2 pr-2 flex-1 justify-end">
+            <TextField
+              label="Total"
+              size="small"
+              value={total}
+              disabled
+            />
+          </div>
         </div>
 
         <div>
@@ -232,8 +272,11 @@ function GenerateInvoice() {
           onClick={saveInvoice}
           disabled={isSaving}
           className="bg-[#53cf48] px-4 py-2 rounded-full hover:bg-[#7ae070] hover:text-black font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer">
-          {isSaving ? "Saving..." : "Save Invoice"}
+          {isSaving ? `Saving...` : "Save Invoice"}
         </button>
+        <div>
+          {isSaving ? <BtnLoader /> : " "}
+        </div>
       </CardActions>
     </React.Fragment>
   );
@@ -255,11 +298,17 @@ function GenerateInvoice() {
           <div className="flex flex-col items-center justify-center pb-8 pt-4">
             <h4 className="text-4xl font-bold text-[#f273f2]">Create Invoice</h4>
             <p className="mt-4 text-xl text-gray-700 font-bold"></p>
-
             <div>
               <Card sx={{ minWidth: 300, maxWidth: 800 }} className="bg-white rounded-xl shadow-md p-6 w-full">
                 {card}
               </Card>
+
+              <CustomSnackbar
+                open={snackbarOpen}
+                onClose={handleClose}
+                message={snackbarMessage}
+                severity={snackbarSeverity}
+              />
             </div>
           </div>
         </div>
