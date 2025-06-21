@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Sidebar from '../../components/Dashboard/Sidebar';
 import { Link } from 'react-router-dom';
+import Loader from '../../components/common/loader';
 
 const InvoiceDetails = () => {
     const { invoiceId, userId } = useParams();
@@ -60,9 +61,32 @@ const InvoiceDetails = () => {
 
     }, [API_BASE_URL, invoiceId, userId]);
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-    if (!invoice) return <div>No invoice found</div>;
+    if (loading) return (
+        <div className="ml-64 flex-1 bg-gray-50 p-6 min-h-screen">
+            <div className="flex flex-col items-center justify-center pb-8 pt-20">
+                <h1 className="text-6xl font-bold text-[#f273f2] pb-2"><Loader /></h1>
+                <p className="mt-2 text-gray-500">Loader...</p>
+            </div>
+        </div>
+    );
+
+    if (error) return (
+        <div className="ml-64 flex-1 bg-gray-50 p-6 min-h-screen">
+            <div className="flex flex-col items-center justify-center pb-8 pt-20">
+                <h1 className="text-6xl font-bold text-[#f273f2] pb-2">Error.</h1>
+                <p className="mt-2 text-gray-500">{error}</p>
+            </div>
+        </div>
+    );
+
+    if (!invoice) return (
+        <div className="ml-64 flex-1 bg-gray-50 p-6 min-h-screen">
+            <div className="flex flex-col items-center justify-center pb-8 pt-20">
+                <h1 className="text-6xl font-bold text-[#f273f2] pb-2">Loading.</h1>
+                <p className="mt-2 text-gray-500">Invoice details Loading...</p>
+            </div>
+        </div>
+    );
 
     return (
         <div className="flex">
@@ -76,11 +100,25 @@ const InvoiceDetails = () => {
                     Invoice details:
                 </h1>
                 <div className="bg-white rounded-xl shadow-md p-6 w-full">
-                    <h1 className="text-lg font-bold text-gray-800 mb-4 pl-2">
-                        <span className="text-[#f273f2] font-bold">#{invoice.invoiceNumber}</span>
-                    </h1>
-                    <hr className='pb-2 pt-4'></hr>
+                    <div className="flex items-center">
+                        <h1 className="text-lg font-bold text-gray-800 mb-4 pl-2">
+                            <span className="text-[#f273f2] font-bold">#{invoice.invoiceNumber}</span>
+                        </h1>
+                        <div className="size-14 grow ..."></div>
+                        <button className="bg-[#f273f2] px-4 py-2 rounded-full hover:bg-[#fa8cfa] hover:text-black font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer" variant="primary">
+                            <Link to={`#`} className="text-white">
+                                Send Invoice
+                            </Link>
+                        </button>
+                        <span className='pr-4' />
+                        <button className="bg-[#53cf48] px-4 py-2 rounded-full hover:bg-[#7ae070] hover:text-black font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer" variant="primary">
+                            <Link to={`#`} className="text-white">
+                                Download Invoice
+                            </Link>
+                        </button>
+                    </div>
 
+                    <hr className='pb-2 pt-4'></hr>
 
                     <div className="grid grid-cols-3 gap-4 pr-0 pl-2">
                         <div>
@@ -132,18 +170,6 @@ const InvoiceDetails = () => {
                             </tr>
                         </tbody>
                     </table>
-                    <br />
-                    <button className="bg-[#f273f2] px-4 py-2 rounded-full hover:bg-[#fa8cfa] hover:text-black font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer" variant="primary">
-                        <Link to={`#`} className="text-white">
-                            Send Invoice
-                        </Link>
-                    </button>
-                    <span className='pr-4' />
-                    <button className="bg-[#53cf48] px-4 py-2 rounded-full hover:bg-[#7ae070] hover:text-black font-semibold transform hover:scale-105 transition-transform duration-300 cursor-pointer" variant="primary">
-                        <Link to={`#`} className="text-white">
-                            Download Invoice
-                        </Link>
-                    </button>
                 </div>
             </div>
         </div>

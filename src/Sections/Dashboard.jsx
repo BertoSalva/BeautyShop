@@ -22,7 +22,7 @@ const Dashboard = () => {
               <VisitsSummary />
             </div>
             {/* Invoices Below */}
-            <Invoices />
+
           </div>
 
           {/* Right Column (Appointments) */}
