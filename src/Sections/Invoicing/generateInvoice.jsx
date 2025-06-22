@@ -28,6 +28,7 @@ function GenerateInvoice() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+  const [selectedClientId, setSelectedClientId] = useState(null);
 
   const navigate = useNavigate();
   const [error, setError] = useState("");
@@ -153,6 +154,11 @@ function GenerateInvoice() {
 
 
   async function saveInvoice() {
+    if(selectedClientId === null || selectedClientId === undefined) {
+      showSnackbar('Please select a client for the invoice.', 'error');
+      return;
+    }
+
     const token = localStorage.getItem("token");
     if (!token) {
       alert("User not logged in");
@@ -177,12 +183,10 @@ function GenerateInvoice() {
       total: invoiceItems.reduce((sum, item) => sum + item.quantity * item.price, 0),
       description,
       isPaid: false,
-      userId: 7,
+      userId: selectedClientId,
       VendorId: userId,
       invoiceItems
     };
-
-    console.log("Invoice Payload:", invoiceItems.length);
 
     if (invoiceItems[0].name == "") {
       showSnackbar('Please add at least one service item to the invoice.', 'error')
@@ -224,7 +228,7 @@ function GenerateInvoice() {
         <hr />
         <br />
         <div className="pb-4">
-          <AutoCompleteClientSelect />
+          <AutoCompleteClientSelect onclientSelect={(id) => setSelectedClientId(id)}/>
         </div>
         <div className="pb-4">
         </div>
