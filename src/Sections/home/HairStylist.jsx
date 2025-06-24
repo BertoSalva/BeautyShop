@@ -14,7 +14,7 @@ const HairStylist = () => {
     fetch(`${API_BASE_URL}/auth/users/role/HairStylist`)
       .then((res) => {
         if (!res.ok) {
-          throw new Error("Failed to fetch hairstylists.");
+          throw new Error("No hairstylists.");
         }
         return res.json();
       })

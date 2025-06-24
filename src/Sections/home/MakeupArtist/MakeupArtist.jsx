@@ -14,7 +14,7 @@ const MakeupArtist = () => {
     fetch(`${API_BASE_URL}/auth/users/role/MakeupArtist`)
       .then((res) => {
         if (!res.ok) {
-          throw new Error("Failed to fetch makeup artists.");
+          throw new Error("No makeup artists.");
         }
         return res.json();
       })

@@ -54,7 +54,7 @@ const Appointments = () => {
 
     fetch(url)
       .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch bookings");
+        if (!res.ok) throw new Error("No bookings");
         return res.json();
       })
       .then((data) => {
@@ -74,7 +74,7 @@ const Appointments = () => {
           if (appt.price || !appt.stylistId) return appt;
           try {
             const res = await fetch(`${API_BASE_URL}/auth/user/${appt.stylistId}`);
-            if (!res.ok) throw new Error("Failed to fetch stylist");
+            if (!res.ok) throw new Error("No stylist");
             const stylist = await res.json();
             return { ...appt, price: stylist.serviceCost || 0 };
           } catch {

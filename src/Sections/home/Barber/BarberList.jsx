@@ -14,7 +14,7 @@ const BarberList = () => {
     fetch(`${API_BASE_URL}/auth/users/role/Barber`)
       .then((res) => {
         if (!res.ok) {
-          throw new Error("Failed to fetch barbers.");
+          throw new Error("No barbers.");
         }
         return res.json();
       })

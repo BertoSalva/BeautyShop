@@ -14,7 +14,7 @@ const NailTech = () => {
     fetch(`${API_BASE_URL}/auth/users/role/NailTech`)
       .then((res) => {
         if (!res.ok) {
-          throw new Error("Failed to fetch nail technicians.");
+          throw new Error("No nail technicians.");
         }
         return res.json();
       })

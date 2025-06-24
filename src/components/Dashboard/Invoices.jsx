@@ -30,7 +30,7 @@ const Invoices = () => {
       }
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch invoices");
+        if (!res.ok) throw new Error("No invoices");
         return res.json();
       })
       .then((data) => {

@@ -53,7 +53,7 @@ const VendorHome = () => {
         const data = await response.json();
         setBookings(data);
       } catch (err) {
-        console.error("Failed to fetch bookings:", err);
+        console.error("No bookings:", err);
       }
     };
 

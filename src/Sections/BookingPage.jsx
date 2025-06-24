@@ -16,7 +16,7 @@ const BookingPage = () => {
     const fetchStylist = async () => {
       try {
         const res = await fetch(`${API_BASE_URL}/auth/user/${stylistId}`);
-        if (!res.ok) throw new Error("Failed to fetch stylist info");
+        if (!res.ok) throw new Error("No stylist info");
         const data = await res.json();
 
         setStylist(data);

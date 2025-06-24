@@ -25,7 +25,7 @@ const InvoiceDetails = () => {
             }
         })
             .then(res => {
-                if (!res.ok) throw new Error("Failed to fetch invoice");
+                if (!res.ok) throw new Error("No invoice");
                 return res.json();
             })
             .then(data => {
