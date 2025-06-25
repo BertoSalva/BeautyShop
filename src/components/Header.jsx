@@ -9,9 +9,8 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   const navigate = useNavigate();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const closeMenu = () => setTimeout(() => setIsMenuOpen(false), 150); // ✅ Smooth closing effect
+  const closeMenu = () => setTimeout(() => setIsMenuOpen(false), 150);
 
-  // Updated navigation items with external routing
   const navItems = [
     { link: "Home", path: "/", type: "router" },
     { link: "Hair", path: "/stylists", type: "router" },
@@ -20,11 +19,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     { link: "Make-up", path: "/makeup-artists", type: "router" },
     { link: "About", path: "/about", type: "router" },
     { link: "Follow Us", path: "/socials", type: "router" },
-
-    ...(isLoggedIn ? [
-      { link: "Manage Account", path: "/stylistAccount", type: "router" }
-    ] : [
-    ])
+    ...(isLoggedIn ? [{ link: "Manage Account", path: "/stylistAccount", type: "router" }] : [])
   ];
 
   const handleLogout = () => {
@@ -35,27 +30,27 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   const loginButton = isLoggedIn ? (
     <button
       onClick={handleLogout}
-      className="bg-[#f273f2] px-6 py-2 rounded-full hover:bg-white hover:text-black font-bold transform hover:scale-110 transition-transform duration-300 cursor-pointer"
+      className="bg-[#f273f2] px-4 py-1 rounded-full hover:bg-white hover:text-black font-bold transform hover:scale-110 transition-transform duration-300 cursor-pointer"
     >
       Logout
     </button>
   ) : (
     <RouterLink
       to="/login"
-      className="bg-[#f273f2] px-6 py-2 rounded-full hover:bg-white hover:text-black font-bold transform hover:scale-110 transition-transform duration-300 cursor-pointer"
+      className="bg-[#f273f2] px-4 py-1 rounded-full hover:bg-white hover:text-black font-bold transform hover:scale-110 transition-transform duration-300 cursor-pointer"
     >
       Login/Sign-Up
     </RouterLink>
   );
 
   return (
-    <nav className="flex justify-between items-center gap-4 bg-black lg:px-10 px-4 py-2 sticky top-0 z-30 border-[6px] border-[#0a040a]">
+    <nav className="flex justify-between items-center gap-4 bg-black lg:px-10 px-4 py-1 sticky top-0 z-30 border-[6px] border-[#0a040a]">
       {/* Logo + Text */}
       <div id="logo" className="flex items-center gap-3">
         <RouterLink to="/">
-          <img src={logoB} alt="myBeautyShop Logo" className="h-24 md:h-28 w-auto object-contain" />
+          <img src={logoB} alt="myBeautyShop Logo" className="h-12 md:h-14 w-auto object-contain" />
         </RouterLink>
-        <h2 className="text-white font-bold text-xl md:text-3xl">
+        <h2 className="text-white font-bold text-base md:text-xl">
           myBeauty<span className="italic text-[#f273f2]">Shop</span>
         </h2>
       </div>
@@ -66,7 +61,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
           type === "scroll" ? (
             <ScrollLink
               key={path}
-              className="text-white uppercase font-semibold cursor-pointer p-2 rounded-lg hover:bg-[#f273f2] hover:text-black"
+              className="text-white uppercase font-semibold cursor-pointer p-1 rounded-lg hover:bg-[#f273f2] hover:text-black"
               to={path}
               spy={true}
               offset={-100}
@@ -78,7 +73,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
             <RouterLink
               key={path}
               to={path}
-              className="text-white uppercase font-semibold cursor-pointer p-2 rounded-lg hover:bg-[#f273f2] hover:text-black"
+              className="text-white uppercase font-semibold cursor-pointer p-1 rounded-lg hover:bg-[#f273f2] hover:text-black"
             >
               {link}
             </RouterLink>
@@ -108,7 +103,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
             type === "scroll" ? (
               <ScrollLink
                 key={path}
-                className="text-white uppercase font-semibold cursor-pointer p-2 rounded-lg hover:bg-[#aa9e5f] hover:text-black w-full text-center"
+                className="text-white uppercase font-semibold cursor-pointer p-1 rounded-lg hover:bg-[#aa9e5f] hover:text-black w-full text-center"
                 to={path}
                 spy={true}
                 offset={-100}
@@ -121,7 +116,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
               <RouterLink
                 key={path}
                 to={path}
-                className="text-white uppercase font-semibold cursor-pointer p-2 rounded-lg hover:bg-[#aa9e5f] hover:text-black w-full text-center"
+                className="text-white uppercase font-semibold cursor-pointer p-1 rounded-lg hover:bg-[#aa9e5f] hover:text-black w-full text-center"
                 onClick={closeMenu}
               >
                 {link}
