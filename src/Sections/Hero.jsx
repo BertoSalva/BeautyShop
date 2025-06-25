@@ -48,6 +48,7 @@ const Hero = () => {
         className="relative w-full md:w-[35%] h-[30vh] md:h-full bg-cover bg-center grayscale flex justify-center items-center pt-6 md:pt-20"
         style={{ backgroundImage: `url(${heroRight})` }}
       >
+        {/*
         <div
           data-aos="fade-up"
           className="flex items-center bg-white border border-gray-300 rounded-lg overflow-hidden shadow-lg w-[90%] md:w-full mx-0"
@@ -61,6 +62,7 @@ const Hero = () => {
             Search
           </button>
         </div>
+        */}
       </div>
     </section>
   );
