@@ -20,7 +20,7 @@ const Footer = () => {
               <p className='text-sm text-gray-400 mt-1'>Visit Help Center</p>
             </div>
             <div className='flex gap-3 mt-2'>
-              {[FaFacebook, FaYoutube, FaInstagram, FaTwitter].map((Icon, index) => (
+              {[FaFacebook, FaInstagram, FaTwitter].map((Icon, index) => (
                 <div
                   key={index}
                   className='bg-[#f273f2] p-2 rounded-full cursor-pointer hover:bg-white hover:text-black transition-transform transform hover:scale-105'
