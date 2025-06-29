@@ -176,7 +176,7 @@ const NailTech = () => {
         {/* Bottom CTA */}
         <div className="mt-8 flex justify-center">
           <button className="bg-black text-white px-6 py-3 font-semibold rounded-lg hover:bg-gray-700 transition">
-            View More Nail Techs
+            View More Techs
           </button>
         </div>
       </div>
