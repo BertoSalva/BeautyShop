@@ -1,50 +1,145 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import aboutBackground from "../../../assets/images/about-bg.jpg"; // Replace with your actual image
+import { motion } from "framer-motion";
 
 const About = () => {
   return (
     <section
-      className="w-full h-screen flex justify-center items-center text-center bg-cover bg-center relative px-4 md:px-8"
-      style={{ backgroundImage: `url(${aboutBackground})` }}
+      className="relative w-full min-h-screen bg-cover bg-center flex items-center justify-center px-4 py-16 text-white"
+      style={{ backgroundImage: 'url("/src/assets/images/about-bg.jpg")' }}
     >
-      {/* Dark overlay for text contrast */}
-      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
 
-      {/* Content Section */}
-      <div className="relative z-10 max-w-3xl text-white">
-        <h1 className="text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg">Our Story</h1>
-        <p className="text-sm md:text-base leading-relaxed drop-shadow-md">
-          Born and bred in Mzansi, My Beauty Shop is more than a platform—it’s a movement to celebrate South African beauty in all its forms. 
-          We’re on a mission to make top-tier hair, makeup, and nail services accessible to everyone, from the bustling streets of Jozi to the serene coasts of the Western Cape.
-        </p>
+      <div className="relative z-10 max-w-6xl mx-auto text-center">
+        {/* Hero animation */}
+        <motion.h1
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="text-4xl md:text-6xl font-extrabold leading-tight mb-6"
+        >
+          My Beauty Shop
+        </motion.h1>
 
-        <h2 className="text-2xl md:text-4xl font-bold mt-8 drop-shadow-lg">What We Offer</h2>
-        <p className="text-sm md:text-base leading-relaxed mt-2 drop-shadow-md">
-          Your All-in-One Beauty Hub <br />
-          Your Style, Your Rules <br />
-          Seamless & Secure
-        </p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mb-10"
+        >
+          Born and bred in Mzansi, we're not just a platform, we're a movement
+          celebrating African beauty in all its glory. From Jozi's streets to
+          Cape Town's coastlines, we bring top-tier hair, makeup, and nail
+          services right to you.
+        </motion.p>
 
-        <h2 className="text-2xl md:text-4xl font-bold mt-8 drop-shadow-lg">Why Choose Us?</h2>
-        <p className="text-sm md:text-base leading-relaxed mt-2 drop-shadow-md">
-          Ubuntu in Action – We treat every client like family. <br />
-          Easy & Secure – Seamless bookings, real-time updates, and 24/7 support. <br />
-          A portion of every purchase supports local beauty entrepreneurs.
-        </p>
+        {/* Section Blocks */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+          {/* Original Sections */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="bg-white/10 p-6 rounded-xl backdrop-blur-md"
+          >
+            <h3 className="text-xl font-semibold mb-3 text-yellow-400">What We Offer</h3>
+            <ul className="space-y-2 text-sm text-gray-100">
+              <li>✓ Your All-in-One Beauty Hub</li>
+              <li>✓ Your Style, Your Rules</li>
+              <li>✓ Seamless & Secure</li>
+            </ul>
+          </motion.div>
 
-        <h2 className="text-2xl md:text-4xl font-bold mt-8 drop-shadow-lg">Need Help?</h2>
-        <p className="text-sm md:text-base leading-relaxed mt-2 drop-shadow-md">
-          Our team at <a href="mailto:support@mybeautyshop.co.za" className="underline text-yellow-300 hover:text-yellow-500">
-          support@mybeautyshop.co.za</a> is here to answer questions, resolve issues, or just chat beauty tips.
-        </p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="bg-white/10 p-6 rounded-xl backdrop-blur-md"
+          >
+            <h3 className="text-xl font-semibold mb-3 text-pink-400">Why Choose Us?</h3>
+            <ul className="space-y-2 text-sm text-gray-100">
+              <li>✓ Ubuntu in Action — You’re family here</li>
+              <li>✓ 24/7 Real-Time Booking & Support</li>
+              <li>✓ We uplift local beauty entrepreneurs</li>
+            </ul>
+          </motion.div>
 
-        {/* Link to Reviews Page */}
-        <div className="mt-6">
-          <Link to="/reviews" className="text-lg font-semibold text-yellow-300 hover:text-yellow-500 transition">
-            Read What Our Clients Say →
-          </Link>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            className="bg-white/10 p-6 rounded-xl backdrop-blur-md"
+          >
+            <h3 className="text-xl font-semibold mb-3 text-green-300">Need Help?</h3>
+            <p className="text-sm text-gray-100">
+              Reach us anytime at{' '}
+              <a
+                href="mailto:support@mybeautyshop.co.za"
+                className="text-yellow-300 underline"
+              >
+                support@mybeautyshop.co.za
+              </a>
+              . We’re here for tips, support, or just a quick chat.
+            </p>
+          </motion.div>
+
+          {/* New Sections */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+            className="bg-white/10 p-6 rounded-xl backdrop-blur-md"
+          >
+            <h3 className="text-xl font-semibold mb-3 text-yellow-300">Newsroom</h3>
+            <ul className="space-y-2 text-sm text-gray-100">
+              <li>✓ Latest trends & product updates</li>
+              <li>✓ Community stories & artist spotlights</li>
+              <li>✓ Industry insights across SA beauty</li>
+            </ul>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+            className="bg-white/10 p-6 rounded-xl backdrop-blur-md"
+          >
+            <h3 className="text-xl font-semibold mb-3 text-green-400">Investors</h3>
+            <ul className="space-y-2 text-sm text-gray-100">
+              <li>✓ Transparent growth strategy</li>
+              <li>✓ Backing women-led tech & beauty</li>
+              <li>✓ Let’s grow South Africa’s next big platform</li>
+            </ul>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.5 }}
+            className="bg-white/10 p-6 rounded-xl backdrop-blur-md"
+          >
+            <h3 className="text-xl font-semibold mb-3 text-blue-400">Careers</h3>
+            <ul className="space-y-2 text-sm text-gray-100">
+              <li>✓ Join our creative, remote-first team</li>
+              <li>✓ Shape the future of beauty tech</li>
+              <li>✓ We're hiring designers, devs & storytellers</li>
+            </ul>
+          </motion.div>
         </div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.9, duration: 0.6 }}
+          className="mt-10"
+        >
+          <a
+            href="reviews"
+            className="text-yellow-400 font-medium hover:underline text-lg"
+          >
+            Read What Our Clients Say →
+          </a>
+        </motion.div>
       </div>
     </section>
   );
