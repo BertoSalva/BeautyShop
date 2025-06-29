@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaStar, FaEye, FaMoneyBillAlt, FaSearch } from "react-icons/fa";
 import stylistImage from "../../assets/images/hairStlylist1.jpg";

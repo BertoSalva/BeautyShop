@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaStar, FaEye, FaMoneyBillAlt, FaSearch } from "react-icons/fa";
 import barberImage from "../../../assets/images/barber1.jpg";
@@ -64,7 +64,7 @@ const BarberList = () => {
           </div>
 
           <p className="text-base md:text-lg text-gray-700 mt-4 leading-relaxed md:pr-10 max-w-3xl mx-auto md:mx-0">
-            Whether you're in Joburg chasing fresh fades or in Cape Town craving classic cuts, find a skilled local barber who understands your style and vibe.
+            Whether you are in Joburg chasing fresh fades or in Cape Town craving classic cuts, find a skilled local barber who understands your style and vibe.
           </p>
         </motion.div>
 
