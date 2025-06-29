@@ -165,7 +165,7 @@ const BarberList = () => {
                   <div className="mt-5 flex flex-col sm:flex-row justify-center items-center gap-3">
                     <button
                       onClick={() => navigate(`/book/${barber.id}`)}
-                      className="bg-[#111] text-white px-4 py-2.5 rounded-full text-sm font-semibold shadow-md hover:bg-[#f273f2] transition-all duration-300 ease-in-out w-full sm:w-auto"
+                      className="bg-[#111] text-white px-5 py-2.5 rounded-full text-sm font-semibold shadow-md hover:bg-[#f273f2] transition-all duration-300 ease-in-out w-full sm:w-auto"
                     >
                       Book Now
                     </button>
