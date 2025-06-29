@@ -156,7 +156,7 @@ const BarberList = () => {
                         <FaMoneyBillAlt className="text-white size-4" />
                       </div>
                       <p className="text-gray-800">
-                        Price: <span className="font-semibold text-green-600">R{barber.serviceCost ?? "N/A"}</span>
+                        Price: <span className="font-semibold text-green-600">R: {barber.serviceCost ?? "0.00"}</span>
                       </p>
                     </div>
                   </div>
