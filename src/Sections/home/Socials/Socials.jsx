@@ -1,4 +1,3 @@
-import React from "react";
 import backgroundImage from "../../../assets/images/cpt1.jpg";
 import {
   FaFacebook,
@@ -12,7 +11,7 @@ import { motion } from "framer-motion";
 const Socials = () => {
   return (
     <section
-      className="w-full min-h-[80vh] bg-cover bg-center relative flex justify-top items-center px-4 sm:px-6 lg:px-10 py-10"
+      className="w-full min-h-[80vh] bg-cover bg-center relative flex justify-center items-center px-4 sm:px-6 lg:px-10 py-10"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       {/* Overlay */}
